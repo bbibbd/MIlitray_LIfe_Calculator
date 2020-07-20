@@ -9,7 +9,8 @@ import java.awt.GridLayout;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
@@ -30,8 +31,8 @@ public class FrameSetting extends JFrame {
 
 	ResultPanel resultP = new ResultPanel();
 	JTextArea textArea = new JTextArea(5,20);
-	
-	private int sty, stm, std, edy, edm, edd;
+
+	private int sty, stm, std,  edy, edm, edd;
 
 	public int getSty() {
 		return sty;
@@ -98,6 +99,7 @@ public class FrameSetting extends JFrame {
 		setLocation(x,y);
 		setSize(sizeX,sizeY);
 		setResizable(false);
+		setVisible(true);
 	}
 
 
@@ -107,13 +109,16 @@ public class FrameSetting extends JFrame {
 
 		JButton calculateBtn = new JButton("계산");
 		buttonPanel.add(calculateBtn);
-		/*
+
 		calculateBtn.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				textArea.setText("");;
+				Run gibeom = new Run("김기범",sty,  stm, std, edy,edm, edd);
+				gibeom.calculating();
+				showResult(gibeom.getA());
 			}
 		});
-		*/
+
+
 		JButton resetBtn = new JButton("초기화");
 		buttonPanel.add(resetBtn);
 
@@ -123,8 +128,7 @@ public class FrameSetting extends JFrame {
 			}
 		});
 
-		JButton saveTxtBtn = new JButton("txt파일로 저장");
-		buttonPanel.add(saveTxtBtn);
+	
 
 
 		buttonPanel.setLayout(fl);
@@ -159,19 +163,89 @@ public class FrameSetting extends JFrame {
 		JScrollPane psty = new JScrollPane(sty);
 		JScrollPane pstm = new JScrollPane(stm);
 		JScrollPane pstd = new JScrollPane(std);
-		
+
 		this.sty = Integer.parseInt(sty.getSelectedItem().toString());
 		this.stm = Integer.parseInt(stm.getSelectedItem().toString());
 		this.std =  Integer.parseInt(std.getSelectedItem().toString());
+		
+		sty.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange() == ItemEvent.SELECTED){
+					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					String str = jbox.getSelectedItem().toString();
+					setSty(Integer.parseInt(str));
+					System.out.println(str);
+				}
+			}
+		});
+
+		stm.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange() == ItemEvent.SELECTED){
+					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					String str = jbox.getSelectedItem().toString();
+					setStm(Integer.parseInt(str));
+					System.out.println(str);
+				}
+			}
+		});
+		
+		std.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange() == ItemEvent.SELECTED){
+					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					String str = jbox.getSelectedItem().toString();
+					setStd(Integer.parseInt(str));
+					System.out.println(str);
+				}
+			}
+		});
+
 
 		JComboBox edy = new JComboBox(endYear);
 		JComboBox edm = new JComboBox(endMonth);
-		JComboBox Edd = new JComboBox(endDay);
+		JComboBox edd = new JComboBox(endDay);
 		JScrollPane pedy = new JScrollPane(edy);
 		JScrollPane pedm = new JScrollPane(edm);
-		JScrollPane pedd = new JScrollPane(Edd);
+		JScrollPane pedd = new JScrollPane(edd);
 
+		this.edy = Integer.parseInt(edy.getSelectedItem().toString());
+		this.edm = Integer.parseInt(edm.getSelectedItem().toString());
+		this.edd =  Integer.parseInt(edd.getSelectedItem().toString());
+		
+		edy.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange() == ItemEvent.SELECTED){
+					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					String str = jbox.getSelectedItem().toString();
+					setEdy(Integer.parseInt(str));
+					System.out.println(str);
+				}
+			}
+		});
 
+		
+		edm.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange() == ItemEvent.SELECTED){
+					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					String str = jbox.getSelectedItem().toString();
+					setEdm(Integer.parseInt(str));
+					System.out.println(str);
+				}
+			}
+		});
+	
+		edd.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent ev) {
+				if(ev.getStateChange() == ItemEvent.SELECTED){
+					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					String str = jbox.getSelectedItem().toString();
+					setEdd(Integer.parseInt(str));
+					System.out.println(str);
+				}
+			}
+		});
 
 		startPanel.add(startLabel); 
 		startPanel.add(psty);	startPanel.add(pstm); startPanel.add(pstd);
@@ -200,6 +274,7 @@ public class FrameSetting extends JFrame {
 
 		resultP.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.YELLOW),"결과"));
 		add(resultP,BorderLayout.CENTER);
+		setVisible(true);
 
 	}
 }

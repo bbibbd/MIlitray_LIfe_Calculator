@@ -6,6 +6,66 @@ class Run {
 	private String name;
 	private int sy, sm, sd, ey, em, ed;
 
+	public int getSy() {
+		return sy;
+	}
+
+
+	public void setSy(int sy) {
+		this.sy = sy;
+	}
+
+
+	public int getSm() {
+		return sm;
+	}
+
+
+	public void setSm(int sm) {
+		this.sm = sm;
+	}
+
+
+	public int getSd() {
+		return sd;
+	}
+
+
+	public void setSd(int sd) {
+		this.sd = sd;
+	}
+
+
+	public int getEy() {
+		return ey;
+	}
+
+
+	public void setEy(int ey) {
+		this.ey = ey;
+	}
+
+
+	public int getEm() {
+		return em;
+	}
+
+
+	public void setEm(int em) {
+		this.em = em;
+	}
+
+
+	public int getEd() {
+		return ed;
+	}
+
+
+	public void setEd(int ed) {
+		this.ed = ed;
+	}
+
+
 	public String getName(){
 		return name;
 	}
@@ -38,7 +98,7 @@ class Run {
 
 		//이미 전역한 사람일 경우
 		if(calculator.getRemainDays()<=0){
-			System.out.println("고인이시네요. 프로그램을 종료합니다.");
+			finalResult.append("고인이시네요. 프로그램을 종료합니다.");
 			return  ;
 		}
 
@@ -119,7 +179,7 @@ class Run {
 		case 9: finalResult.append("말년");  break;
 		default:  finalResult.append("고인");  break;
 		}
-		finalResult.append("\n----------------------------------------------------------------");
+		finalResult.append("\n-------------------------------------------------------");
 	}
 
 	private double remainPercentage = calculator.getPercentage();  
