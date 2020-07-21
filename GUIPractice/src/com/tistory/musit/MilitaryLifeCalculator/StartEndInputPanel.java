@@ -15,7 +15,7 @@ public class StartEndInputPanel extends JPanel {
 	}
 
 	public Dimension getPreferredSize() {
-		return new Dimension(280, 60);
+		return new Dimension(280, 130);
 	}
 	
 	

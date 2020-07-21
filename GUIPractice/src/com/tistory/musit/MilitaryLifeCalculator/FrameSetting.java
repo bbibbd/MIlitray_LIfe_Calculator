@@ -26,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.EtchedBorder;
 
 public class FrameSetting extends JFrame {
 
@@ -98,8 +99,9 @@ public class FrameSetting extends JFrame {
 		super(title);
 		setLocation(x,y);
 		setSize(sizeX,sizeY);
-		setResizable(false);
+		setResizable(true);
 		setVisible(true);
+		add(resultP,BorderLayout.CENTER);
 	}
 
 
@@ -112,9 +114,11 @@ public class FrameSetting extends JFrame {
 
 		calculateBtn.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
+				
 				Run gibeom = new Run("김기범",sty,  stm, std, edy,edm, edd);
 				gibeom.calculating();
-				showResult(gibeom.getA());
+				showResult(gibeom.getFinalResult());
+				
 			}
 		});
 
@@ -124,7 +128,7 @@ public class FrameSetting extends JFrame {
 
 		resetBtn.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				textArea.setText("");;
+				showResult(new StringBuilder(""));
 			}
 		});
 
@@ -140,14 +144,20 @@ public class FrameSetting extends JFrame {
 
 	public void setDate() {
 
-		GridLayout g = new GridLayout(2,4,2,2);
+		GridLayout g = new GridLayout(3,4,2,2);
 		StartEndInputPanel textField = new StartEndInputPanel(g);
 
 		JPanel startPanel = new JPanel(new FlowLayout());
 		JPanel endPanel = new JPanel();
+		JPanel namePanel = new JPanel();
+		
 		JLabel startLabel = new JLabel("입대일");
 		JLabel endLabel = new JLabel("전역일");
+		JLabel nameLabel = new JLabel("이름");
+		
+		JTextField nameField = new JTextField("",15);
 
+		
 
 		String [] startYear = {"2018", "2019", "2020", "2021", "2022", "2023"};
 		String [] startMonth = { "1","2","3","4","5","6","7","8","9","10","11","12"};		
@@ -251,12 +261,14 @@ public class FrameSetting extends JFrame {
 		startPanel.add(psty);	startPanel.add(pstm); startPanel.add(pstd);
 		endPanel.add(endLabel); 
 		endPanel.add(pedy); endPanel.add(pedm); endPanel.add(pedd);
-
+		namePanel.add(nameLabel); namePanel.add(nameField);
+		
 		textField.add(startPanel);
 		textField.add(endPanel);
+		textField.add(namePanel);
 		add(textField,BorderLayout.NORTH);	
 
-		textField.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
+		textField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), "입력"));
 
 
 	}
@@ -267,14 +279,20 @@ public class FrameSetting extends JFrame {
 		textArea.setText(str.toString());
 		textArea.setEditable(false);
 		textArea.setFont(new Font("고딕",Font.TRUETYPE_FONT,17));
+
+
+	}
+	
+	public void setResult() {
 		JScrollPane p = new JScrollPane(textArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);	
 		p.setPreferredSize(new Dimension(360,390));
 		resultP.add(p,BorderLayout.CENTER);
+		resultP.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), "결과"));
 
-
-		resultP.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.YELLOW),"결과"));
-		add(resultP,BorderLayout.CENTER);
 		setVisible(true);
 
+		
 	}
+	
+
 }

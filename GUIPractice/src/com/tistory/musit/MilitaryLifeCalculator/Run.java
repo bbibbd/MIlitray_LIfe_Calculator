@@ -4,6 +4,11 @@ package com.tistory.musit.MilitaryLifeCalculator;
 //import java.util.Scanner;
 class Run {
 	private String name;
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	private int sy, sm, sd, ey, em, ed;
 
 	public int getSy() {
@@ -69,7 +74,10 @@ class Run {
 	public String getName(){
 		return name;
 	}
-
+	
+	public Run() {
+		
+	}
 
 	public Run(String name, int sy, int sm, int sd, int ey, int em, int ed) {
 		this.name = name;
@@ -188,7 +196,7 @@ class Run {
 		return remainPercentage;
 	}
 
-	public StringBuilder getA() {
+	public StringBuilder getFinalResult() {
 		return finalResult;
 	}
 
