@@ -103,7 +103,7 @@ public class FrameSetting extends JFrame {
 		super(title);
 		setLocation(x,y);
 		setSize(sizeX,sizeY);
-		setResizable(true);
+		setResizable(false);
 		setVisible(true);
 		add(resultP,BorderLayout.CENTER);
 	}
