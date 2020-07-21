@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 import javax.swing.BorderFactory;
 import javax.swing.ComboBoxModel;
@@ -29,11 +31,13 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.EtchedBorder;
 
 public class FrameSetting extends JFrame {
-
+	JTextField nameField = new JTextField("",15);
 	ResultPanel resultP = new ResultPanel();
 	JTextArea textArea = new JTextArea(5,20);
+	String tx;
 
 	private int sty, stm, std,  edy, edm, edd;
+	private String name;
 
 	public int getSty() {
 		return sty;
@@ -109,21 +113,22 @@ public class FrameSetting extends JFrame {
 		JPanel buttonPanel = new JPanel();
 		FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 7, 7);
 
-		JButton calculateBtn = new JButton("계산");
+		JButton calculateBtn = new JButton("Calculate");
 		buttonPanel.add(calculateBtn);
 
 		calculateBtn.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				
-				Run gibeom = new Run("김기범",sty,  stm, std, edy,edm, edd);
+				String name = nameField.getText();
+				Run gibeom = new Run(name, sty,  stm, std, edy,edm, edd);
 				gibeom.calculating();
 				showResult(gibeom.getFinalResult());
+				tx = gibeom.getFinalResult().toString();
 				
 			}
 		});
 
 
-		JButton resetBtn = new JButton("초기화");
+		JButton resetBtn = new JButton("Reset");
 		buttonPanel.add(resetBtn);
 
 		resetBtn.addActionListener( new ActionListener(){
@@ -132,9 +137,27 @@ public class FrameSetting extends JFrame {
 			}
 		});
 
-	
 
-
+		JButton saveAsTxt = new JButton("Save as txt");
+		buttonPanel.add(saveAsTxt);
+		
+		saveAsTxt.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				try {
+				    OutputStream output = new FileOutputStream("C:\\Users\\탄현대대\\Documents\\Output.txt");
+				    String str =tx;
+				    byte[] by=str.getBytes();
+				    output.write(by);
+						
+				} catch (Exception a) {
+			            a.getStackTrace();
+				}
+			    }
+			
+			
+		});
+		
 		buttonPanel.setLayout(fl);
 		buttonPanel.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED));
 		add(buttonPanel,BorderLayout.SOUTH);
@@ -151,12 +174,12 @@ public class FrameSetting extends JFrame {
 		JPanel endPanel = new JPanel();
 		JPanel namePanel = new JPanel();
 		
-		JLabel startLabel = new JLabel("입대일");
-		JLabel endLabel = new JLabel("전역일");
-		JLabel nameLabel = new JLabel("이름");
+		JLabel startLabel = new JLabel("Start");
+		JLabel endLabel = new JLabel("End  ");
+		JLabel nameLabel = new JLabel("Name");
 		
-		JTextField nameField = new JTextField("",15);
 
+		this.name = nameField.getText();
 		
 
 		String [] startYear = {"2018", "2019", "2020", "2021", "2022", "2023"};
@@ -268,7 +291,7 @@ public class FrameSetting extends JFrame {
 		textField.add(namePanel);
 		add(textField,BorderLayout.NORTH);	
 
-		textField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), "입력"));
+		textField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), "Input Data"));
 
 
 	}
@@ -287,7 +310,7 @@ public class FrameSetting extends JFrame {
 		JScrollPane p = new JScrollPane(textArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);	
 		p.setPreferredSize(new Dimension(360,390));
 		resultP.add(p,BorderLayout.CENTER);
-		resultP.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), "결과"));
+		resultP.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), "Result"));
 
 		setVisible(true);
 
