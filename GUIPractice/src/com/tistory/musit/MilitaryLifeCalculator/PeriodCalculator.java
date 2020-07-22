@@ -97,8 +97,8 @@ class PeriodCalculator extends DataManagement {
 		else if(percentage < 50)  jjam = 4;
 		else if(percentage < 60)  jjam = 5;
 		else if(percentage < 70)  jjam = 6;
-		else if(percentage < 90)  jjam = 7;
-		else if(percentage <= 98) jjam = 8;
+		else if(percentage < 80)  jjam = 7;
+		else if(percentage <= 90) jjam = 8;
 		else if(percentage <100)  jjam = 9;
 		else  jjam =10;
 		return jjam;
@@ -215,6 +215,3 @@ class PeriodCalculator extends DataManagement {
 
 	}
 }
-
-//입대일자 입력하면 자동으로 전역일자 구해주는 프로그램 만들기
-//날짜 입력하면 그 날까지 며칠 남았고, 그날까지 하면 몇%했는지 구해주는 프로그램

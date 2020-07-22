@@ -1,7 +1,5 @@
 package com.tistory.musit.MilitaryLifeCalculator;
 
-//import java.text.SimpleDateFormat;
-//import java.util.Scanner;
 class Run {
 	private String name;
 	
@@ -15,69 +13,55 @@ class Run {
 		return sy;
 	}
 
-
 	public void setSy(int sy) {
 		this.sy = sy;
 	}
-
 
 	public int getSm() {
 		return sm;
 	}
 
-
 	public void setSm(int sm) {
 		this.sm = sm;
 	}
-
 
 	public int getSd() {
 		return sd;
 	}
 
-
 	public void setSd(int sd) {
 		this.sd = sd;
 	}
-
 
 	public int getEy() {
 		return ey;
 	}
 
-
 	public void setEy(int ey) {
 		this.ey = ey;
 	}
-
 
 	public int getEm() {
 		return em;
 	}
 
-
 	public void setEm(int em) {
 		this.em = em;
 	}
-
 
 	public int getEd() {
 		return ed;
 	}
 
-
 	public void setEd(int ed) {
 		this.ed = ed;
 	}
-
 
 	public String getName(){
 		return name;
 	}
 	
-	public Run() {
-		
-	}
+
 
 	public Run(String name, int sy, int sm, int sd, int ey, int em, int ed) {
 		this.name = name;
@@ -90,8 +74,7 @@ class Run {
 	}
 
 	PeriodCalculator calculator = new PeriodCalculator();
-	
-	StringBuilder  finalResult = new StringBuilder("");
+	StringBuilder  finalResult = new StringBuilder("");	//각 method의 결과를 String으로 저장하기위해 StringBuilder을 사용함
 
 	public void calculating(){
 
@@ -104,20 +87,24 @@ class Run {
 		calculator.setEndDate(ed);
 		calculator.calculatingPeriode();
 
+		//군생활이 1년도 안되는 경우(즉, 잘못 입력한 경우)
+		if(calculator.getBetweenYear()==0) {
+			finalResult.append(String.format("%s님..잘못입력하신거 같습니다.\n다시 입력해 주시길.....\n\n", name));
+			return ;
+		}
 		//이미 전역한 사람일 경우
 		if(calculator.getRemainDays()<=0){
-			finalResult.append("고인이시네요. 프로그램을 종료합니다.");
-			return  ;
+			finalResult.append(String.format("%s님은 이미 전역하셨습니다...\n그래도 결과가 궁금하죠..?.\n\n", name));
+		}
+		//아직 입대하지 않은 사람인 경우
+		if(calculator.getPastDays()<0) {
+			finalResult.append(String.format("%s님은 아직 입대도 하지 않으셨네요...ㅎ\n그래도 궁금하시다면야...\n\n", name));
 		}
 
 		//전체 군생활 한 일수, 남은 일수
 		finalResult.append( String.format("- %s님의 전체 군생활: %d년 %d개월 %d일\n(총 %d일) 중\n%d일(%.4f%%) 하셨으며, \n%d일 남으셨습니다.\n\n",
 				name,calculator.getBetweenYear(), calculator.getBetweenMonth(), calculator.getBetweenDay(), calculator.getTotalDays(),
-				calculator.getPastDays(), (double)calculator.getPercentage(),calculator.getRemainDays()));
-
-	
-		
-		
+				calculator.getPastDays(), (double)calculator.getPercentage(),calculator.getRemainDays()));	
 
 		//특정 퍼센트(10%, 20%, 25%, 30%, 33%, ..., 90%)까지 남은 일수
 		DayCalculator dayCalculator = new DayCalculator();
@@ -171,26 +158,27 @@ class Run {
 		//지금까지 대강 먹은 짬밥
 		finalResult.append(String.format("\n\n- 입대 후 지금까지 드신 짬은 %d끼 이며, \n앞으로 %d끼 더 드셔야 합니다.\n\n",calculator.eatedJjam(),calculator.willEatJjam()));
 		//배식조 몇번, 근무 몇번, 교회 몇번
-		finalResult.append(String.format("- 전역할때까지 근무는 약 %d번, 교회는 %d번, \n배식조는 %d번(%d일) 남았습니다.\n",calculator.howManyGeunmu(),calculator.howManyChurch(),calculator.howManyBasik(1),calculator.howManyBasik(2)));
+		//finalResult.append(String.format("- 전역할때까지 근무는 약 %d번, 교회는 %d번, \n배식조는 %d번(%d일) 남았습니다.\n",calculator.howManyGeunmu(),calculator.howManyChurch(),calculator.howManyBasik(1),calculator.howManyBasik(2)));
 		//군생활을 24시간으로 표현하였을 때
-		finalResult.append(String.format("\n- 군생활이 24시간이라면?, \n현재 시각은 "+calculator.dayConvert()+"입니다.\n\n"));
+		finalResult.append(String.format("- 군생활이 24시간이라면?, \n현재 시각은 "+calculator.dayConvert()+"입니다.\n\n"));
 		//어느정도 짬 찼는지 보여줌
 		switch(calculator.jjam(calculator.getPercentage())){
-		case 1:finalResult.append("답없죠...?"); break;
-		case 2: finalResult.append("여전히 답이 없네요."); break;
-		case 3: finalResult.append("착각하지마세요. 아직 짬찌입니다."); break;
-		case 4:finalResult.append("열심히 달렸으나 아직은 짬찌");  break;
-		case 5: finalResult.append("짬 좀 찼네요..?");  break;
-		case 6: finalResult.append("사실상 실세");  break;
-		case 7: finalResult.append("전역이 보이기 시작한다..!");  break;
-		case 8: finalResult.append("혹시 전문하사는...???");  break;
-		case 9: finalResult.append("말년");  break;
+		case 1:finalResult.append("답없죠...?"); break;	//20%이하일 경우
+		case 2: finalResult.append("여전히 답이 없네요."); break;	//30%이하일 경우
+		case 3: finalResult.append("착각하지마세요. 아직 짬찌입니다."); break;	//40%이하일 경우
+		case 4:finalResult.append("열심히 달렸으나 아직은 짬찌");  break;	//50%이하일 경우
+		case 5: finalResult.append("이제 겨우 반 넘음ㅋ");  break;	//60%이하일 경우
+		case 6: finalResult.append("짬이 조금씩 차는게 느껴지시나요?\n하지만 아직도 한참 남았네요^^");  break;	//70%이하일 경우
+		case 7: finalResult.append("이제야 군생활이 좀 편해지셨겠어요~");  break;	//80%이하인 경우
+		case 8: finalResult.append("이제 좀 보이나요? 전역이..");  break;	//90%이하인 경우
+		case 9: finalResult.append("집에 곧 가시겠어요");  break;	//100%이하일 경우
 		default:  finalResult.append("고인");  break;
 		}
 		finalResult.append("\n-------------------------------------------------------");
+		
 	}
 
-	private double remainPercentage = calculator.getPercentage();  
+	private double remainPercentage = calculator.getPercentage();  //남은percentage를 
 
 	public double getPercentage(){
 		return remainPercentage;
