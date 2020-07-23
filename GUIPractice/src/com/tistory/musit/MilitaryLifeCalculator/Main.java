@@ -10,7 +10,6 @@ public class Main {
 		frame.setButton();
 		frame.setDate();
 		frame.setResult();
-		
 	}
 
 }

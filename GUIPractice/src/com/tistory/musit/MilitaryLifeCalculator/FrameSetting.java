@@ -232,22 +232,13 @@ public class FrameSetting extends JFrame {		//FrameSetting
 			}
 		});
 
-		JButton saveAsTxt = new JButton("Save as txt");	//text파일로 저장하는 버튼
-		buttonPanel.add(saveAsTxt);	
+		JButton exitButton = new JButton("exit");	//text파일로 저장하는 버튼
+		buttonPanel.add(exitButton);	
 
 		//Save as txt버튼 클릭 시 이벤트
-		saveAsTxt.addActionListener(new ActionListener() {
+		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
-				try {
-					OutputStream output = new FileOutputStream("C:\\Users\\탄현대대\\Documents\\Output.txt");	//저장경로와 이름
-					String str =tx;	
-					byte[] by=str.getBytes();
-					output.write(by);
-
-				} catch (Exception a) {
-					a.getStackTrace();
-				}
+				System.exit(0);
 			}
 
 		});
