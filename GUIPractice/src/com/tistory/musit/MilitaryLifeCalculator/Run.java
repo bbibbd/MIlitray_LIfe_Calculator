@@ -2,6 +2,12 @@ package com.tistory.musit.MilitaryLifeCalculator;
 
 class Run {
 	private String name;
+	PeriodCalculator calculator = new PeriodCalculator();
+	private int betweenY = calculator.getBetweenYear();
+	
+	public int getBetweenYaer() {
+		return betweenY;
+	}
 	
 	public void setName(String name) {
 		this.name = name;
@@ -73,7 +79,7 @@ class Run {
 		this.ed = ed;
 	}
 
-	PeriodCalculator calculator = new PeriodCalculator();
+
 	StringBuilder  finalResult = new StringBuilder("");	//각 method의 결과를 String으로 저장하기위해 StringBuilder을 사용함
 
 	public void calculating(){
@@ -86,7 +92,9 @@ class Run {
 		calculator.setEndMonth(em);
 		calculator.setEndDate(ed);
 		calculator.calculatingPeriode();
+		
 
+		
 		//군생활이 1년도 안되는 경우(즉, 잘못 입력한 경우)
 		if(calculator.getBetweenYear()==0) {
 			finalResult.append(String.format("%s님..잘못입력하신거 같습니다.\n다시 입력해 주시길.....\n\n", name));

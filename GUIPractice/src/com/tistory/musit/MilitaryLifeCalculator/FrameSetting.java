@@ -157,6 +157,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 				if(ev.getStateChange() == ItemEvent.SELECTED){
 					JComboBox jbox = (JComboBox)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
+					setEdm(Integer.parseInt(str));
 
 				}
 			}
