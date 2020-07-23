@@ -34,7 +34,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 
 	JTextField nameField = new JTextField("",14);	//이름 입력을 위한 TextField를 선언
 	JTextArea textArea = new JTextArea(5,20);	//	resultP안에 들어가는 TextArea를 선언해 실제 결과를 출력할 수 있게 함.
-	String tx;	//최종 출력을 Txt파일로 저장하기위해 선언, reset버튼과 calculate버튼을 눌렀을 때 사용해야하기때문에
+		//최종 출력을 Txt파일로 저장하기위해 선언, reset버튼과 calculate버튼을 눌렀을 때 사용해야하기때문에
 
 	private int sty, stm, std,  edy, edm, edd;	//순서대로 입대년, 입대월, 입대일, 전역년, 전역월, 전역일을 변수로 선언
 	private String name;	//textField에 입력된 이름값을 저장하기위해  선언
@@ -101,7 +101,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 					JComboBox jbox = (JComboBox)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setSty(Integer.parseInt(str));
-					System.out.println(str);
+
 				}
 			}
 		});
@@ -112,7 +112,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 					JComboBox jbox = (JComboBox)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setStm(Integer.parseInt(str));
-					System.out.println(str);
+
 				}
 			}
 		});
@@ -123,7 +123,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 					JComboBox jbox = (JComboBox)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setStd(Integer.parseInt(str));
-					System.out.println(str);
+
 				}
 			}
 		});
@@ -146,7 +146,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 					JComboBox jbox = (JComboBox)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setEdy(Integer.parseInt(str));
-					System.out.println(str);
+
 				}
 			}
 		});
@@ -157,8 +157,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 				if(ev.getStateChange() == ItemEvent.SELECTED){
 					JComboBox jbox = (JComboBox)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
-					setEdm(Integer.parseInt(str));
-					System.out.println(str);
+
 				}
 			}
 		});
@@ -169,7 +168,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 					JComboBox jbox = (JComboBox)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setEdd(Integer.parseInt(str));
-					System.out.println(str);
+
 				}
 			}
 		});
@@ -217,7 +216,6 @@ public class FrameSetting extends JFrame {		//FrameSetting
 				Run gibeom = new Run(name, sty,  stm, std, edy,edm, edd);	//이름과 입대일, 전역일을 다 세팅해서 Initiating함
 				gibeom.calculating();
 				showResult(gibeom.getFinalResult());		//StringBuilder형태의 결과를 가져와서 textArea에 출력
-				tx = gibeom.getFinalResult().toString();	//결과를 string tx에 저장
 
 			}
 		});
