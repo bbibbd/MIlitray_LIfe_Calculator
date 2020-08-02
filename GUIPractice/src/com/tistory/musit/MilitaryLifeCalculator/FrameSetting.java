@@ -6,37 +6,34 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
-import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.io.FileOutputStream;
-import java.io.OutputStream;
-
 import javax.swing.BorderFactory;
-import javax.swing.ComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
-import javax.swing.border.EtchedBorder;
 
-public class FrameSetting extends JFrame {		//FrameSetting
+public class FrameSetting extends JFrame {		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+//FrameSetting
 
 	JTextField nameField = new JTextField("",14);	//이름 입력을 위한 TextField를 선언
 	JTextArea textArea = new JTextArea(5,20);	//	resultP안에 들어가는 TextArea를 선언해 실제 결과를 출력할 수 있게 함.
 		//최종 출력을 Txt파일로 저장하기위해 선언, reset버튼과 calculate버튼을 눌렀을 때 사용해야하기때문에
 
 	private int sty, stm, std,  edy, edm, edd;	//순서대로 입대년, 입대월, 입대일, 전역년, 전역월, 전역일을 변수로 선언
+	@SuppressWarnings("unused")
 	private String name;	//textField에 입력된 이름값을 저장하기위해  선언
 
 
@@ -59,6 +56,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void setDate() {	//입대일, 전역일, 이름을 입력하기위한 Panel
 
 		GridLayout g = new GridLayout(3,4,2,2);
@@ -76,6 +74,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 		
 		//입대년도, 월, 일을 LIST로 만들어 JComboBox에 묶어둠
 		String [] startYear = {"2018", "2019", "2020", "2021", "2022", "2023"};
+		//String [] startYear = {"2018", "2019", "2020", "2021", "2022", "2023"};
 		String [] startMonth = { "1","2","3","4","5","6","7","8","9","10","11","12"};		
 		String  [] startDay = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 		//전역년도, 월, 일을 LIST로 만들어 JComboBox에 묶어둠
@@ -83,9 +82,9 @@ public class FrameSetting extends JFrame {		//FrameSetting
 		String [] endMonth = {"1","2","3","4","5","6","7","8","9","10","11","12"};		
 		String  [] endDay = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 
-		JComboBox sty = new JComboBox(startYear);
-		JComboBox stm = new JComboBox(startMonth);
-		JComboBox std = new JComboBox(startDay);
+		JComboBox <String> sty = new JComboBox<String>(startYear);
+		JComboBox <String> stm = new JComboBox<String>(startMonth);
+		JComboBox <String> std = new JComboBox<String>(startDay);
 		JScrollPane psty = new JScrollPane(sty);
 		JScrollPane pstm = new JScrollPane(stm);
 		JScrollPane pstd = new JScrollPane(std);
@@ -98,6 +97,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 		sty.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
+					@SuppressWarnings("rawtypes")
 					JComboBox jbox = (JComboBox)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setSty(Integer.parseInt(str));
@@ -109,7 +109,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 		stm.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setStm(Integer.parseInt(str));
 
@@ -120,7 +120,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 		std.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setStd(Integer.parseInt(str));
 
@@ -129,9 +129,9 @@ public class FrameSetting extends JFrame {		//FrameSetting
 		});
 
 
-		JComboBox edy = new JComboBox(endYear);
-		JComboBox edm = new JComboBox(endMonth);
-		JComboBox edd = new JComboBox(endDay);
+		JComboBox<String> edy = new JComboBox<String>(endYear);
+		JComboBox<String> edm = new JComboBox<String>(endMonth);
+		JComboBox<String> edd = new JComboBox<String>(endDay);
 		JScrollPane pedy = new JScrollPane(edy);
 		JScrollPane pedm = new JScrollPane(edm);
 		JScrollPane pedd = new JScrollPane(edd);
@@ -143,7 +143,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 		edy.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setEdy(Integer.parseInt(str));
 
@@ -155,7 +155,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 		edm.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setEdm(Integer.parseInt(str));
 
@@ -166,7 +166,7 @@ public class FrameSetting extends JFrame {		//FrameSetting
 		edd.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setEdd(Integer.parseInt(str));
 
