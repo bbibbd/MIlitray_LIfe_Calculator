@@ -97,8 +97,7 @@ public class FrameSetting extends JFrame {		/**
 		sty.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
-					@SuppressWarnings("rawtypes")
-					JComboBox jbox = (JComboBox)ev.getItemSelectable();
+					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setSty(Integer.parseInt(str));
 
