@@ -66,9 +66,9 @@ public class FrameSetting extends JFrame {		/**
 		JPanel endPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//"End"와  JComboBox 3개(년, 월, 일)을 넣는 panel
 		JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//name과 textField를 넣는 panel
 
-		JLabel startLabel = new JLabel("Start");
-		JLabel endLabel = new JLabel("End  ");
-		JLabel nameLabel = new JLabel("Name");
+		JLabel startLabel = new JLabel("입대일");
+		JLabel endLabel = new JLabel("전역일");
+		JLabel nameLabel = new JLabel("이름 ");
 
 		this.name = nameField.getText();
 		
@@ -206,7 +206,7 @@ public class FrameSetting extends JFrame {		/**
 		JPanel buttonPanel = new JPanel();	//버튼 3개가 들어가는 Panel
 		FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 7, 7);	//가운데정렬하기 위해 FlowLayout을 선언
 
-		JButton calculateBtn = new JButton("Calculate");	//계산하는 버튼 생성
+		JButton calculateBtn = new JButton("계산");	//계산하는 버튼 생성
 		buttonPanel.add(calculateBtn);		//버튼패널에 계산버튼 추가
 
 		//계산 버튼 클릭 시의 이벤트
@@ -220,7 +220,7 @@ public class FrameSetting extends JFrame {		/**
 			}
 		});
 
-		JButton resetBtn = new JButton("Reset");	//reset버튼 initiating
+		JButton resetBtn = new JButton("초기화");	//reset버튼 initiating
 		buttonPanel.add(resetBtn);	//버튼페널에 reset버튼 추가
 
 		//reset버튼 클릭 시의 이벤트
@@ -230,7 +230,7 @@ public class FrameSetting extends JFrame {		/**
 			}
 		});
 
-		JButton exitButton = new JButton("exit");	//text파일로 저장하는 버튼
+		JButton exitButton = new JButton("종료");	//text파일로 저장하는 버튼
 		buttonPanel.add(exitButton);	
 
 		//Save as txt버튼 클릭 시 이벤트
