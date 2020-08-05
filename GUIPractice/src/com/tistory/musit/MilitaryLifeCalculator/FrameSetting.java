@@ -67,8 +67,7 @@ public class FrameSetting extends JFrame {		/**
 		mHelp = new JMenu("Help");
 		setJMenuBar(menuBar);
 
-		menuBar.add(mFile);
-		menuBar.add(mEdit);
+		menuBar.add(mFile); //
 		menuBar.add(mHelp);
 	}
 
