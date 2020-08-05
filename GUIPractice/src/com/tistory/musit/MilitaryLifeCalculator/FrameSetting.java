@@ -15,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -55,6 +57,21 @@ public class FrameSetting extends JFrame {		/**
 		textArea.setFont(new Font("고딕",Font.TRUETYPE_FONT,17));
 
 	}
+	
+	public void setMenuBar() {
+		JMenuBar menuBar = new JMenuBar();
+		JMenu mFile, mEdit, mHelp;
+
+		mFile = new JMenu("File");
+		mEdit = new JMenu("Edit");
+		mHelp = new JMenu("Help");
+		setJMenuBar(menuBar);
+
+		menuBar.add(mFile);
+		menuBar.add(mEdit);
+		menuBar.add(mHelp);
+	}
+
 	
 	@SuppressWarnings("unchecked")
 	public void setDate() {	//입대일, 전역일, 이름을 입력하기위한 Panel
