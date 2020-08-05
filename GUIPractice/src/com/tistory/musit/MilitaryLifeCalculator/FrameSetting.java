@@ -25,16 +25,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 
 
-/*JMenuBar추가하기
- * JMenuBar의 file을 누르면 -->file io사용
-   1. 사용자 저장
-   2. 사용자 불러오기
-   3. 결과 저장
- * help 를 누르면
-      프로그램에 대한 설명하는 창
- * 
-   
- */
+
 
 public class FrameSetting extends JFrame {		/**
 	 * 
@@ -71,6 +62,8 @@ public class FrameSetting extends JFrame {		/**
 	}
 	
 	public void setMenuBar() {
+
+	
 		JMenuBar menuBar = new JMenuBar();
 		JMenu mFile, mEdit, mHelp;
 
@@ -79,8 +72,8 @@ public class FrameSetting extends JFrame {		/**
 		mHelp = new JMenu("Help");
 		setJMenuBar(menuBar);
 
-		menuBar.add(mFile); //
-		menuBar.add(mHelp);
+		menuBar.add(mFile); // TODO 사용자 저장, 사용자 불러오기, 결과 내보내기
+		menuBar.add(mHelp);	// TODO 프로그램 정보, 사용방법 적혀있는 창 띄우기
 	}
 
 	
@@ -99,7 +92,7 @@ public class FrameSetting extends JFrame {		/**
 		JLabel nameLabel = new JLabel("이름 ");
 
 		this.name = nameField.getText();
-		
+		// TODO JComboBox의 기본값을 숫자가 아닌 년도, 월, 일 이런식으로 만들기
 		//입대년도, 월, 일을 LIST로 만들어 JComboBox에 묶어둠
 		String [] startYear = {"2018", "2019", "2020", "2021", "2022", "2023"};
 		//String [] startYear = {"2018", "2019", "2020", "2021", "2022", "2023"};
