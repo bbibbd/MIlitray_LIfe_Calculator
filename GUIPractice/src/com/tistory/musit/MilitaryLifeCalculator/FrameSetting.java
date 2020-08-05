@@ -24,6 +24,18 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 
+
+/*JMenuBar추가하기
+ * JMenuBar의 file을 누르면 -->file io사용
+   1. 사용자 저장
+   2. 사용자 불러오기
+   3. 결과 저장
+ * help 를 누르면
+      프로그램에 대한 설명하는 창
+ * 
+   
+ */
+
 public class FrameSetting extends JFrame {		/**
 	 * 
 	 */
