@@ -69,7 +69,7 @@ public class FrameSetting extends JFrame {		/**
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mFile, mEdit, mHelp;
+		JMenu mFile, mHelp;
 		JMenuItem saveUser, loadUser, exportToTxtFile, aboutProgram, howToUse;
 		
 		mFile = new JMenu("File");	saveUser = new JMenuItem("Save User");	loadUser = new JMenuItem("Load User");	exportToTxtFile = new JMenuItem("Export to Txt File");	
