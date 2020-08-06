@@ -17,6 +17,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -65,15 +67,35 @@ public class FrameSetting extends JFrame {		/**
 
 	
 		JMenuBar menuBar = new JMenuBar();
-		JMenu mFile, mEdit, mHelp;
-
-		mFile = new JMenu("File");
-		mEdit = new JMenu("Edit");
-		mHelp = new JMenu("Help");
 		setJMenuBar(menuBar);
+		
+		JMenu mFile, mEdit, mHelp;
+		JMenuItem saveUser, loadUser, exportToTxtFile, aboutProgram, howToUse;
+		
+		mFile = new JMenu("File");	saveUser = new JMenuItem("Save User");	loadUser = new JMenuItem("Load User");	exportToTxtFile = new JMenuItem("Export to Txt File");	
+		mHelp = new JMenu("Help");	aboutProgram = new JMenuItem("About...");	howToUse = new JMenuItem("How to use");
 
+		
+		mFile.add(saveUser);	mFile.add(loadUser);	mFile.add(exportToTxtFile);		
+		mHelp.add(aboutProgram);	mHelp.add(howToUse);
 		menuBar.add(mFile); // TODO 사용자 저장, 사용자 불러오기, 결과 내보내기
 		menuBar.add(mHelp);	// TODO 프로그램 정보, 사용방법 적혀있는 창 띄우기
+
+		aboutProgram.addActionListener(new ActionListener(){
+			
+			public void actionPerformed(ActionEvent e) {
+				String about = "Maker: Bluemini \nContact: bbibbochaa74@gmail.com\nVersion: 2020-09 (3.0.2)\r\n" + 
+						"Build id: 20200806-1200\nThis program tells you about your military life. \nThere is no copyright. You can use it as you want and share it.\t";
+				JOptionPane.showMessageDialog(null, about,"about",1);
+			}
+		});
+		
+		howToUse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String howToUse = "1. 입대일과 전역일을 선택하여 입력합니다.\n2. 이름을 입력합니다.\n3. 하단의 계산버튼을 클릭합니다.\n4. 그러면 중앙에 결과가 나타날 것입니다.";
+				JOptionPane.showMessageDialog(null, howToUse,"about",1);
+			}
+		});
 	}
 
 	
