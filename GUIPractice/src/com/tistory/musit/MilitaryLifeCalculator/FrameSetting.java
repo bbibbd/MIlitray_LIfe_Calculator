@@ -10,6 +10,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStream;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -33,6 +38,7 @@ public class FrameSetting extends JFrame {		/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	String tx = "Empty,,,";
 //FrameSetting
 
 	JTextField nameField = new JTextField("",14);	//이름 입력을 위한 TextField를 선언
@@ -80,7 +86,35 @@ public class FrameSetting extends JFrame {		/**
 		mHelp.add(aboutProgram);	mHelp.add(howToUse);
 		menuBar.add(mFile); // TODO 사용자 저장, 사용자 불러오기, 결과 내보내기
 		menuBar.add(mHelp);	// TODO 프로그램 정보, 사용방법 적혀있는 창 띄우기
+		
+		exportToTxtFile.addActionListener(new ActionListener() {	//txt파일로 내보내기 
+			public void actionPerformed(ActionEvent e) {
 
+				  try
+				    {
+				      FileWriter fw = new FileWriter("out.txt",false); // 절대주소 경로 가능
+				      BufferedWriter bw = new BufferedWriter(fw);
+				      String str = tx;
+				 
+				      bw.write(str);
+				      bw.newLine(); // 줄바꿈
+				       
+				      bw.close();
+				      JOptionPane.showMessageDialog(null, "저장되었습니다.","about",1);
+				    }
+				    catch (IOException er)
+				    {
+				      System.err.println(er); // 에러가 있다면 메시지 출력
+				      System.exit(1);
+				    }
+
+
+			    }
+
+
+		});
+
+		
 		aboutProgram.addActionListener(new ActionListener(){
 			
 			public void actionPerformed(ActionEvent e) {
@@ -258,6 +292,7 @@ public class FrameSetting extends JFrame {		/**
 				String name = nameField.getText();	//nameField에 입력된 이름값을 불러오고
 				Run gibeom = new Run(name, sty,  stm, std, edy,edm, edd);	//이름과 입대일, 전역일을 다 세팅해서 Initiating함
 				gibeom.calculating();
+				tx = gibeom.getFinalResult().toString();
 				showResult(gibeom.getFinalResult());		//StringBuilder형태의 결과를 가져와서 textArea에 출력
 
 			}
