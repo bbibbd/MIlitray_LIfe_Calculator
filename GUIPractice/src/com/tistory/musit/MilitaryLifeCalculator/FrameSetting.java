@@ -92,7 +92,7 @@ public class FrameSetting extends JFrame {		/**
 
 				  try
 				    {
-				      FileWriter fw = new FileWriter("out.txt",false); // 절대주소 경로 가능
+				      FileWriter fw = new FileWriter("result.txt",false); // 절대주소 경로 가능
 				      BufferedWriter bw = new BufferedWriter(fw);
 				      String str = tx;
 				 
@@ -100,7 +100,7 @@ public class FrameSetting extends JFrame {		/**
 				      bw.newLine(); // 줄바꿈
 				       
 				      bw.close();
-				      JOptionPane.showMessageDialog(null, "저장되었습니다.","about",1);
+				      JOptionPane.showMessageDialog(null, "result.txt 파일로 저장되었습니다.","about",1);
 				    }
 				    catch (IOException er)
 				    {
