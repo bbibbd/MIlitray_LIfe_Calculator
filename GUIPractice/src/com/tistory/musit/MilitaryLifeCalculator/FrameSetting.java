@@ -305,6 +305,7 @@ public class FrameSetting extends JFrame {		/**
 		resetBtn.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				showResult(new StringBuilder(""));	//결과에 빈 string을 출력하게 함
+				tx = "empty,,, ";
 			}
 		});
 
