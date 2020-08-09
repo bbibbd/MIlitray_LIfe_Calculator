@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -30,22 +31,23 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
+import au.com.bytecode.opencsv.*;
+
 
 
 
 
 public class FrameSetting extends JFrame {		/**
-	 * 
-	 */
+ * 
+ */
 	private static final long serialVersionUID = 1L;
 	String tx = "Empty,,,";
-//FrameSetting
 
 	JTextField nameField = new JTextField("",14);	//이름 입력을 위한 TextField를 선언
 	JTextArea textArea = new JTextArea(5,20);	//	resultP안에 들어가는 TextArea를 선언해 실제 결과를 출력할 수 있게 함.
-		//최종 출력을 Txt파일로 저장하기위해 선언, reset버튼과 calculate버튼을 눌렀을 때 사용해야하기때문에
+	//최종 출력을 Txt파일로 저장하기위해 선언, reset버튼과 calculate버튼을 눌렀을 때 사용해야하기때문에
 
-	private int sty, stm, std,  edy, edm, edd;	//순서대로 입대년, 입대월, 입대일, 전역년, 전역월, 전역일을 변수로 선언
+	int sty, stm, std,  edy, edm, edd;	//순서대로 입대년, 입대월, 입대일, 전역년, 전역월, 전역일을 변수로 선언
 	@SuppressWarnings("unused")
 	private String name;	//textField에 입력된 이름값을 저장하기위해  선언
 
@@ -68,62 +70,121 @@ public class FrameSetting extends JFrame {		/**
 		textArea.setFont(new Font("고딕",Font.TRUETYPE_FONT,17));
 
 	}
-	
+
 	public void setMenuBar() {
 
-	
+
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		JMenu mFile, mHelp;
 		JMenuItem saveUser, loadUser, exportToTxtFile, aboutProgram, howToUse;
-		
+
 		mFile = new JMenu("File");	saveUser = new JMenuItem("Save User");	loadUser = new JMenuItem("Load User");	exportToTxtFile = new JMenuItem("Export to Txt File");	
 		mHelp = new JMenu("Help");	aboutProgram = new JMenuItem("About...");	howToUse = new JMenuItem("How to use");
 
-		
+
 		mFile.add(saveUser);	mFile.add(loadUser);	mFile.add(exportToTxtFile);		
 		mHelp.add(aboutProgram);	mHelp.add(howToUse);
 		menuBar.add(mFile); // TODO 사용자 저장, 사용자 불러오기, 결과 내보내기
 		menuBar.add(mHelp);	// TODO 프로그램 정보, 사용방법 적혀있는 창 띄우기
-		
+
+		//save user 
+		//TODO openCSV를 이용하여 userInfo를 CSV파일로 저장하고, CSV파일로 불러와서 처리가히
+		saveUser.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				
+				StringBuilder userInfo = new StringBuilder();
+				
+				userInfo.append(String.format("\"%s\"\r\n" + 
+						"\"%d\",\"%d\",\"%d\"\r\n" + 
+						"\"%d\",\"%d\",\"%d\"", nameField.getText(),sty,stm,std,edy,edm,edd));
+
+				try
+				{
+					FileWriter fw = new FileWriter("userInfo.csv",true); // 절대주소 경로 가능
+					BufferedWriter bw = new BufferedWriter(fw);
+					String str = userInfo.toString();
+
+					bw.write(str);
+					bw.newLine(); // 줄바꿈
+
+					bw.close();
+					JOptionPane.showMessageDialog(null, "userInfo.csv 파일로 저장되었습니다.","about",1);
+				}
+				catch (IOException er)
+				{
+					System.err.println(er); // 에러가 있다면 메시지 출력
+					System.exit(1);
+				}
+			}
+		});
+
+		/*
+		 * loadUser
+		 
+		loadUser.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+	
+
+				try 
+				{
+					CSVReader reader = new CSVReader(new FileReader("userInfo.csv"));
+					String [] nextLine;
+					while ((nextLine = reader.readNext()) != null) { // nextLine[] is an array of values from the line
+					  System.out.println(nextLine[0] + nextLine[1] + "etc...");
+					}
+					
+				} 
+				catch(Exception a) 
+				{
+					a.printStackTrace();
+				}
+
+
+			}
+		});
+*/
+		//export to txt file
 		exportToTxtFile.addActionListener(new ActionListener() {	//txt파일로 내보내기 
 			public void actionPerformed(ActionEvent e) {
 
-				  try
-				    {
-				      FileWriter fw = new FileWriter("result.txt",false); // 절대주소 경로 가능
-				      BufferedWriter bw = new BufferedWriter(fw);
-				      String str = tx;
-				 
-				      bw.write(str);
-				      bw.newLine(); // 줄바꿈
-				       
-				      bw.close();
-				      JOptionPane.showMessageDialog(null, "result.txt 파일로 저장되었습니다.","about",1);
-				    }
-				    catch (IOException er)
-				    {
-				      System.err.println(er); // 에러가 있다면 메시지 출력
-				      System.exit(1);
-				    }
+				try
+				{
+					FileWriter fw = new FileWriter("result.txt",false); // 절대주소 경로 가능
+					BufferedWriter bw = new BufferedWriter(fw);
+					String str = tx;
+
+					bw.write(str);
+					bw.newLine(); // 줄바꿈
+
+					bw.close();
+					JOptionPane.showMessageDialog(null, "result.txt 파일로 저장되었습니다.","about",1);
+				}
+				catch (IOException er)
+				{
+					System.err.println(er); // 에러가 있다면 메시지 출력
+					System.exit(1);
+				}
 
 
-			    }
+			}
 
 
 		});
 
-		
+
 		aboutProgram.addActionListener(new ActionListener(){
-			
+
 			public void actionPerformed(ActionEvent e) {
 				String about = "Maker: Bluemini \nContact: bbibbochaa74@gmail.com\nVersion: 2020-09 (3.0.2)\r\n" + 
 						"Build id: 20200806-1200\nThis program tells you about your military life. \nThere is no copyright. You can use it as you want and share it.\t";
 				JOptionPane.showMessageDialog(null, about,"about",1);
 			}
 		});
-		
+
 		howToUse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String howToUse = "1. 입대일과 전역일을 선택하여 입력합니다.\n2. 이름을 입력합니다.\n3. 하단의 계산버튼을 클릭합니다.\n4. 그러면 중앙에 결과가 나타날 것입니다.";
@@ -132,7 +193,7 @@ public class FrameSetting extends JFrame {		/**
 		});
 	}
 
-	
+
 	@SuppressWarnings("unchecked")
 	public void setDate() {	//입대일, 전역일, 이름을 입력하기위한 Panel
 
@@ -276,8 +337,8 @@ public class FrameSetting extends JFrame {		/**
 		setVisible(true);
 
 	}
-	
-	
+
+
 	public void setButton () {		//하단의 calculate, reset 버튼을 세팅해주는 method
 
 		JPanel buttonPanel = new JPanel();	//버튼 3개가 들어가는 Panel
