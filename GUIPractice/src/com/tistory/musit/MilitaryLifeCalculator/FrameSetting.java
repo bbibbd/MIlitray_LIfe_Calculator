@@ -16,6 +16,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.time.DateTimeException;
+import java.time.LocalDate;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -99,12 +100,16 @@ public class FrameSetting extends JFrame {		/**
 		
 
 		//export to txt file
+		//TODO 저장파일명을 날짜+이름
 		exportToTxtFile.addActionListener(new ActionListener() {	//txt파일로 내보내기 
 			public void actionPerformed(ActionEvent e) {
 
 				try
 				{
-					FileWriter fw = new FileWriter("result.txt",false); // 절대주소 경로 가능
+					StringBuilder fileName = null ;
+					
+					
+					FileWriter fw = new FileWriter("fileName",false); // 절대주소 경로 가능
 					BufferedWriter bw = new BufferedWriter(fw);
 					String str = tx;
 
