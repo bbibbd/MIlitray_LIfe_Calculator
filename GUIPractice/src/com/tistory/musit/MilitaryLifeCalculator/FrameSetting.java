@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.time.DateTimeException;
 import java.util.HashMap;
 
 import javax.swing.BorderFactory;
@@ -158,7 +159,6 @@ public class FrameSetting extends JFrame {		/**
 		// TODO JComboBox의 기본값을 숫자가 아닌 년도, 월, 일 이런식으로 만들기
 		//입대년도, 월, 일을 LIST로 만들어 JComboBox에 묶어둠
 		String [] startYear = {"2018", "2019", "2020", "2021", "2022", "2023"};
-		//String [] startYear = {"2018", "2019", "2020", "2021", "2022", "2023"};
 		String [] startMonth = { "1","2","3","4","5","6","7","8","9","10","11","12"};		
 		String  [] startDay = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 		//전역년도, 월, 일을 LIST로 만들어 JComboBox에 묶어둠
@@ -298,10 +298,14 @@ public class FrameSetting extends JFrame {		/**
 			public void actionPerformed(ActionEvent e) {
 				String name = nameField.getText();	//nameField에 입력된 이름값을 불러오고
 				Run gibeom = new Run(name, sty,  stm, std, edy,edm, edd);	//이름과 입대일, 전역일을 다 세팅해서 Initiating함
-				gibeom.calculating();
-				tx = gibeom.getFinalResult().toString();
-				showResult(gibeom.getFinalResult());		//StringBuilder형태의 결과를 가져와서 textArea에 출력
-
+				try {
+					gibeom.calculating();
+					tx = gibeom.getFinalResult().toString();
+					showResult(gibeom.getFinalResult());		//StringBuilder형태의 결과를 가져와서 textArea에 출력
+				}	catch (DateTimeException er) {
+					String errMessage = "날짜를 잘못입력하신듯하네요. \n다시입력해주시기 바랍니다.";
+					showResult(new StringBuilder(errMessage));
+				}
 			}
 		});
 
