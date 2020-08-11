@@ -130,7 +130,7 @@ public class FrameSetting extends JFrame {		/**
 		aboutProgram.addActionListener(new ActionListener(){
 
 			public void actionPerformed(ActionEvent e) {
-				String about = "Maker: Bluemini \nContact: bbibbochaa74@gmail.com\nVersion: 2020-09 (3.0.2)\r\n" + 
+				String about = "Maker: Bluemini \nContact: bbibbochaa74@gmail.com\nVersion: 2020-09 (3.1.1)\r\n" + 
 						"Build id: 20200806-1200\nThis program tells you about your military life. \nThere is no copyright. You can use it as you want and share it.\n\n저는 2020년 11월 2일에 전역합니다. ㅂㅇㅂㅇ\t";
 				JOptionPane.showMessageDialog(null, about,"about",1);
 			}
