@@ -1,5 +1,7 @@
 package com.tistory.musit.MilitaryLifeCalculator;
 
+import java.text.DecimalFormat;
+
 class Run {
 	private String name;
 	PeriodCalculator calculator = new PeriodCalculator();
@@ -110,9 +112,19 @@ class Run {
 		}
 
 		//전체 군생활 한 일수, 남은 일수
-		finalResult.append( String.format("- %s님의 전체 군생활: %d년 %d개월 %d일\n(총 %d일) 중\n%d일(%.4f%%) 하셨으며, \n%d일 남으셨습니다.\n\n",
+		finalResult.append(String.format("- %s님의 전체 군생활: %d년 %d개월 %d일\n(총 %d일) 중\n%d일(%.4f%%) 하셨으며, \n%d일 남으셨습니다.\n\n",
 				name,calculator.getBetweenYear(), calculator.getBetweenMonth(), calculator.getBetweenDay(), calculator.getTotalDays(),
 				calculator.getPastDays(), (double)calculator.getPercentage(),calculator.getRemainDays()));	
+		
+		//TODO 몇시간동안 일했고, 최저시급으로 얼마나 벌었는지
+		int hours = 24*calculator.getPastDays();
+		double workHours = calculator.getPastDays()*(5.0/7.0)*9;	//일주일에 5일동안 하루에 9시간씩
+		double wage = workHours*8590;	//2020년기준 최저시급 8590원
+		DecimalFormat df = new DecimalFormat("#,##0");
+		double lol = hours*(2.0/3.0);
+		int book = hours/6;
+		
+		finalResult.append(String.format("총 %s시간(일과 %s시간)동안 \n군생활을 하셨으며 만약 사회에 있었다면 \n최저시급으로 %s원 모았고\n롤은 %s판할 수 있으며, \n책은 %s권 읽을수 있고,\n여자친구는 0번 사귈 수 있습니다.\n\n", df.format(hours),df.format(workHours),df.format(wage),df.format(lol),df.format(book)));
 
 		//특정 퍼센트(10%, 20%, 25%, 30%, 33%, ..., 90%)까지 남은 일수
 		DayCalculator dayCalculator = new DayCalculator();
@@ -165,8 +177,6 @@ class Run {
 
 		//지금까지 대강 먹은 짬밥
 		finalResult.append(String.format("\n\n- 입대 후 지금까지 드신 짬은 %d끼 이며, \n앞으로 %d끼 더 드셔야 합니다.\n\n",calculator.eatedJjam(),calculator.willEatJjam()));
-		//배식조 몇번, 근무 몇번, 교회 몇번
-		//finalResult.append(String.format("- 전역할때까지 근무는 약 %d번, 교회는 %d번, \n배식조는 %d번(%d일) 남았습니다.\n",calculator.howManyGeunmu(),calculator.howManyChurch(),calculator.howManyBasik(1),calculator.howManyBasik(2)));
 		//군생활을 24시간으로 표현하였을 때
 		finalResult.append(String.format("- 군생활이 24시간이라면?, \n현재 시각은 "+calculator.dayConvert()+"입니다.\n\n"));
 		//어느정도 짬 찼는지 보여줌

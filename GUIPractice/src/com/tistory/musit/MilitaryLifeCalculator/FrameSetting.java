@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -52,6 +53,7 @@ public class FrameSetting extends JFrame {		/**
 	private String name;	//textField에 입력된 이름값을 저장하기위해  선언
 
 
+	HashMap<String, String> userInfo = new HashMap<>();
 
 	public FrameSetting(String title, int x, int y, int sizeX, int sizeY) {	//constructor을 생성 (frame이름, xy좌표, 크기)
 		super(title);
@@ -80,73 +82,17 @@ public class FrameSetting extends JFrame {		/**
 		JMenu mFile, mHelp;
 		JMenuItem saveUser, loadUser, exportToTxtFile, aboutProgram, howToUse;
 
-		mFile = new JMenu("File");	saveUser = new JMenuItem("Save User");	loadUser = new JMenuItem("Load User");	exportToTxtFile = new JMenuItem("Export to Txt File");	
-		mHelp = new JMenu("Help");	aboutProgram = new JMenuItem("About...");	howToUse = new JMenuItem("How to use");
+		mFile = new JMenu("파일");	exportToTxtFile = new JMenuItem("결과 저장");	
+		mHelp = new JMenu("Help");	aboutProgram = new JMenuItem("About...");	howToUse = new JMenuItem("사용법");
 
 
-		mFile.add(saveUser);	mFile.add(loadUser);	mFile.add(exportToTxtFile);		
-		mHelp.add(aboutProgram);	mHelp.add(howToUse);
-		menuBar.add(mFile); // TODO 사용자 저장, 사용자 불러오기, 결과 내보내기
-		menuBar.add(mHelp);	// TODO 프로그램 정보, 사용방법 적혀있는 창 띄우기
+		mFile.add(exportToTxtFile);		
+		mHelp.add(howToUse);	mHelp.add(aboutProgram);	
+		menuBar.add(mFile); 
+		menuBar.add(mHelp);	
 
-		//save user 
-		//TODO openCSV를 이용하여 userInfo를 CSV파일로 저장하고, CSV파일로 불러와서 처리가히
-		saveUser.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-				
-				StringBuilder userInfo = new StringBuilder();
-				
-				userInfo.append(String.format("\"%s\"\r\n" + 
-						"\"%d\",\"%d\",\"%d\"\r\n" + 
-						"\"%d\",\"%d\",\"%d\"", nameField.getText(),sty,stm,std,edy,edm,edd));
+		
 
-				try
-				{
-					FileWriter fw = new FileWriter("userInfo.csv",true); // 절대주소 경로 가능
-					BufferedWriter bw = new BufferedWriter(fw);
-					String str = userInfo.toString();
-
-					bw.write(str);
-					bw.newLine(); // 줄바꿈
-
-					bw.close();
-					JOptionPane.showMessageDialog(null, "userInfo.csv 파일로 저장되었습니다.","about",1);
-				}
-				catch (IOException er)
-				{
-					System.err.println(er); // 에러가 있다면 메시지 출력
-					System.exit(1);
-				}
-			}
-		});
-
-		/*
-		 * loadUser
-		 
-		loadUser.addActionListener(new ActionListener() {
-
-			public void actionPerformed(ActionEvent e) {
-	
-
-				try 
-				{
-					CSVReader reader = new CSVReader(new FileReader("userInfo.csv"));
-					String [] nextLine;
-					while ((nextLine = reader.readNext()) != null) { // nextLine[] is an array of values from the line
-					  System.out.println(nextLine[0] + nextLine[1] + "etc...");
-					}
-					
-				} 
-				catch(Exception a) 
-				{
-					a.printStackTrace();
-				}
-
-
-			}
-		});
-*/
 		//export to txt file
 		exportToTxtFile.addActionListener(new ActionListener() {	//txt파일로 내보내기 
 			public void actionPerformed(ActionEvent e) {
@@ -161,7 +107,7 @@ public class FrameSetting extends JFrame {		/**
 					bw.newLine(); // 줄바꿈
 
 					bw.close();
-					JOptionPane.showMessageDialog(null, "result.txt 파일로 저장되었습니다.","about",1);
+					JOptionPane.showMessageDialog(null, "result.txt 파일로 저장되었습니다.","save",1);
 				}
 				catch (IOException er)
 				{
@@ -180,15 +126,15 @@ public class FrameSetting extends JFrame {		/**
 
 			public void actionPerformed(ActionEvent e) {
 				String about = "Maker: Bluemini \nContact: bbibbochaa74@gmail.com\nVersion: 2020-09 (3.0.2)\r\n" + 
-						"Build id: 20200806-1200\nThis program tells you about your military life. \nThere is no copyright. You can use it as you want and share it.\t";
+						"Build id: 20200806-1200\nThis program tells you about your military life. \nThere is no copyright. You can use it as you want and share it.\n\n저는 2020년 11월 2일에 전역합니다. ㅂㅇㅂㅇ\t";
 				JOptionPane.showMessageDialog(null, about,"about",1);
 			}
 		});
 
 		howToUse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String howToUse = "1. 입대일과 전역일을 선택하여 입력합니다.\n2. 이름을 입력합니다.\n3. 하단의 계산버튼을 클릭합니다.\n4. 그러면 중앙에 결과가 나타날 것입니다.";
-				JOptionPane.showMessageDialog(null, howToUse,"about",1);
+				String howToUse = "1. 입대일과 전역일을 선택하여 입력합니다.\n2. 이름을 입력합니다.\n3. 하단의 계산버튼을 클릭합니다.\n4. 그러면 중앙에 결과가 나타날 것입니다.\n\n*초기화버튼을 눌러서 결과창을 비울 수 있습니다.";
+				JOptionPane.showMessageDialog(null, howToUse,"사용법",1);
 			}
 		});
 	}
