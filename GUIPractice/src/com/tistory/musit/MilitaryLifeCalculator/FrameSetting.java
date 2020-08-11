@@ -57,11 +57,15 @@ public class FrameSetting extends JFrame {		/**
 	HashMap<String, String> userInfo = new HashMap<>();
 
 	public FrameSetting(String title, int x, int y, int sizeX, int sizeY) {	//constructor을 생성 (frame이름, xy좌표, 크기)
+		
 		super(title);
+		JOptionPane.showMessageDialog(null, "당신의 군생활이 궁금하신가요?","???",3);
+		JOptionPane.showMessageDialog(null, "잘 오셨습니다. 당신의 군생활을 응원합니다!!!","???",2);
 		setLocation(x,y);
 		setSize(sizeX,sizeY);
 		setResizable(false);
 		setVisible(true);
+
 
 
 	}

@@ -89,7 +89,6 @@ class Run {
 		calculator.setStartYear(sy);
 		calculator.setStartMonth(sm);
 		calculator.setStartDate(sd);
-
 		calculator.setEndYear(ey);
 		calculator.setEndMonth(em);
 		calculator.setEndDate(ed);
@@ -116,19 +115,17 @@ class Run {
 				name,calculator.getBetweenYear(), calculator.getBetweenMonth(), calculator.getBetweenDay(), calculator.getTotalDays(),
 				calculator.getPastDays(), (double)calculator.getPercentage(),calculator.getRemainDays()));	
 		
-		//TODO 몇시간동안 일했고, 최저시급으로 얼마나 벌었는지
+		//몇시간동안 일했고, 최저시급으로 얼마나 벌었는지
 		int hours = 24*calculator.getPastDays();
 		double workHours = calculator.getPastDays()*(5.0/7.0)*9;	//일주일에 5일동안 하루에 9시간씩
 		double wage = workHours*8590;	//2020년기준 최저시급 8590원
 		DecimalFormat df = new DecimalFormat("#,##0");
 		double lol = hours*(2.0/3.0);
 		int book = hours/6;
-		
 		finalResult.append(String.format("총 %s시간(일과 %s시간)동안 \n군생활을 하셨으며 만약 사회에 있었다면 \n최저시급으로 %s원 모았고\n롤은 %s판할 수 있으며, \n책은 %s권 읽을수 있고,\n여자친구는 0번 사귈 수 있습니다.\n\n", df.format(hours),df.format(workHours),df.format(wage),df.format(lol),df.format(book)));
 
 		//특정 퍼센트(10%, 20%, 25%, 30%, 33%, ..., 90%)까지 남은 일수
 		DayCalculator dayCalculator = new DayCalculator();
-		
 		finalResult.append(String.format("- 하루에 %.3f%%씩 증가합니다. \n10%%까지는 %d일 (%s)\n20%%까지는 %d일 (%s)\n25%%까지는 %d일 (%s) \n30%%까지는 %d일 (%s)\n33%%까지는 %d일 (%s)\n40%%까지는 %d일 (%s)\n50%%까지는 %d일 (%s)\n60%%까지는 %d일 (%s)\n66%%까지는 %d일 (%s)\n70%%까지는 %d일 (%s)\n75%%까지는 %d일 (%s)\n80%%까지는 %d일 (%s)\n90%%까지는 %d일 (%s)\n남았습니다.\n"
 				,calculator.dayPercentage()
 				,calculator.remainPercentage(10) ,dayCalculator.addDays(calculator.remainPercentage(10))
@@ -147,7 +144,6 @@ class Run {
 
 
 		//100일, 200일 ,,, 500일 깨졌는지
-		
 		finalResult.append(String.format("\n- 입대 D+ \n100일은 %d일 (%s)\n200일은 %d일 (%s)\n300일은 %d일 (%s)\n400일은 %d일 (%s)\n500일은 %d일 (%s) \n남으셨습니다.\n\n- 전역 D-\n500일은 %d일 (%s)\n400일은 %d일 (%s)\n300일은 %d일 (%s)\n200일은 %d일 (%s)\n100일은 %d일 (%s)\n남으셨습니다.\n",
 				calculator.pastHund(100), dayCalculator.addDays(calculator.pastHund(100)),
 				calculator.pastHund(200), dayCalculator.addDays(calculator.pastHund(200)),
@@ -188,8 +184,8 @@ class Run {
 		case 5: finalResult.append("이제 겨우 반 넘음ㅋ");  break;	//60%이하일 경우
 		case 6: finalResult.append("짬이 조금씩 차는게 느껴지시나요?\n하지만 아직도 한참 남았네요^^");  break;	//70%이하일 경우
 		case 7: finalResult.append("이제야 군생활이 좀 편해지셨겠어요~");  break;	//80%이하인 경우
-		case 8: finalResult.append("이제 좀 보이나요? 전역이..");  break;	//90%이하인 경우
-		case 9: finalResult.append("집에 곧 가시겠어요");  break;	//100%이하일 경우
+		case 8: finalResult.append("전역이 보이시나요?..그렇담 착각입니다^^");  break;	//90%이하인 경우
+		case 9: finalResult.append("전역이 보인다!");  break;	//100%이하일 경우
 		default:  finalResult.append("고인");  break;
 		}
 		finalResult.append("\n-------------------------------------------------------");
