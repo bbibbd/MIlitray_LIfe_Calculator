@@ -120,7 +120,6 @@ public class FrameSetting extends JFrame {
 		});
 	}
 
-
 	//입대일, 전역일, 이름을 입력하기위한 Panel
 	@SuppressWarnings("unchecked")
 	public void setDate() {	
