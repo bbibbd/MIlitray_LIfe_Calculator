@@ -109,7 +109,6 @@ class Run {
 		if(calculator.getPastDays()<0) {
 			finalResult.append(String.format("%s님은 아직 입대도 하지 않으셨네요...ㅎ\n그래도 궁금하시다면야...\n\n", name));
 		}
-
 		//전체 군생활 한 일수, 남은 일수
 		finalResult.append(String.format("- %s님의 전체 군생활: %d년 %d개월 %d일\n(총 %d일) 중\n%d일(%.4f%%) 하셨으며, \n%d일 남으셨습니다.\n\n",
 				name,calculator.getBetweenYear(), calculator.getBetweenMonth(), calculator.getBetweenDay(), calculator.getTotalDays(),

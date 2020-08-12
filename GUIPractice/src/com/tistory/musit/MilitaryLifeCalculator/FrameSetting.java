@@ -11,14 +11,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.BufferedWriter;
-import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
-import java.time.LocalDate;
 import java.util.HashMap;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -34,15 +31,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
-import au.com.bytecode.opencsv.*;
 
-
-
-
-
-public class FrameSetting extends JFrame {		/**
- * 
- */
+public class FrameSetting extends JFrame {		
+ 
 	private static final long serialVersionUID = 1L;
 	String tx = "Empty,,,";
 
@@ -58,7 +49,6 @@ public class FrameSetting extends JFrame {		/**
 	HashMap<String, String> userInfo = new HashMap<>();
 
 	public FrameSetting(String title, int x, int y, int sizeX, int sizeY) {	//constructor을 생성 (frame이름, xy좌표, 크기)
-		
 		super(title);
 		JOptionPane.showMessageDialog(null, "당신의 군생활이 궁금하신가요?","???",3);
 		JOptionPane.showMessageDialog(null, "잘 오셨습니다. 당신의 군생활을 응원합니다!!!","???",2);
@@ -66,81 +56,62 @@ public class FrameSetting extends JFrame {		/**
 		setSize(sizeX,sizeY);
 		setResizable(false);
 		setVisible(true);
-
-
-
 	}
 
 	public void showResult(StringBuilder str) {
-
 		textArea.setText(str.toString());
 		textArea.setEditable(false);
 		textArea.setFont(new Font("고딕",Font.TRUETYPE_FONT,17));
-
 	}
 
 	public void setMenuBar() {
-
-
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 
 		JMenu mFile, mHelp;
-		JMenuItem saveUser, loadUser, exportToTxtFile, aboutProgram, howToUse;
+		JMenuItem  exportToTxtFile, aboutProgram, howToUse;
 
 		mFile = new JMenu("파일");	exportToTxtFile = new JMenuItem("결과 저장");	
 		mHelp = new JMenu("Help");	aboutProgram = new JMenuItem("About...");	howToUse = new JMenuItem("사용법");
-
-
 		mFile.add(exportToTxtFile);		
 		mHelp.add(howToUse);	mHelp.add(aboutProgram);	
 		menuBar.add(mFile); 
 		menuBar.add(mHelp);	
-
 		
-
 		//export to txt file
-		//TODO 저장파일명을 날짜+이름
 		exportToTxtFile.addActionListener(new ActionListener() {	//txt파일로 내보내기 
 			public void actionPerformed(ActionEvent e) {
-
 				try
 				{
-					StringBuilder fileName = null ;
-					
-					
-					FileWriter fw = new FileWriter("fileName",false); // 절대주소 경로 가능
+					SimpleDateFormat format1 = new SimpleDateFormat ( "yy년MM월dd일 EEE요일");
+					String today= format1.format (System.currentTimeMillis());
+					String fileName = String.format("%s님의 군생활(%s).txt",nameField.getText(),today);	//파일이름
+					FileWriter fw = new FileWriter(fileName,false); 
 					BufferedWriter bw = new BufferedWriter(fw);
 					String str = tx;
-
 					bw.write(str);
 					bw.newLine(); // 줄바꿈
-
 					bw.close();
-					JOptionPane.showMessageDialog(null, "result.txt 파일로 저장되었습니다.","save",1);
+					JOptionPane.showMessageDialog(null, String.format("%s로 저장되었습니다.",fileName),"saved",1);
 				}
 				catch (IOException er)
 				{
 					System.err.println(er); // 에러가 있다면 메시지 출력
 					System.exit(1);
 				}
-
-
 			}
-
-
 		});
-
-
+		
+		//about...탭 클릭시
 		aboutProgram.addActionListener(new ActionListener(){
-
 			public void actionPerformed(ActionEvent e) {
 				String about = "Maker: Bluemini \nContact: bbibbochaa74@gmail.com\nVersion: 2020-09 (3.1.1)\r\n" + 
-						"Build id: 20200806-1200\nThis program tells you about your military life. \nThere is no copyright. You can use it as you want and share it.\n\n저는 2020년 11월 2일에 전역합니다. ㅂㅇㅂㅇ\t";
+						"This program tells you about your military life. \nThere is no copyright. You can use it as you want and share it.\n\n저는 2020년 11월 2일에 전역합니다. ㅂㅇㅂㅇ\t";
 				JOptionPane.showMessageDialog(null, about,"about",1);
 			}
 		});
-
+		
+		//사용법 클릭시
 		howToUse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String howToUse = "1. 입대일과 전역일을 선택하여 입력합니다.\n2. 이름을 입력합니다.\n3. 하단의 계산버튼을 클릭합니다.\n4. 그러면 중앙에 결과가 나타날 것입니다.\n\n*초기화버튼을 눌러서 결과창을 비울 수 있습니다.";
@@ -150,22 +121,21 @@ public class FrameSetting extends JFrame {		/**
 	}
 
 
+	//입대일, 전역일, 이름을 입력하기위한 Panel
 	@SuppressWarnings("unchecked")
-	public void setDate() {	//입대일, 전역일, 이름을 입력하기위한 Panel
-
+	public void setDate() {	
 		GridLayout g = new GridLayout(3,4,2,2);
 		StartEndInputPanel textField = new StartEndInputPanel(g);
 
 		JPanel startPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//"Start"와 JComboBox 3개(년, 월, 일)을 넣는 panel
 		JPanel endPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//"End"와  JComboBox 3개(년, 월, 일)을 넣는 panel
 		JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//name과 textField를 넣는 panel
-
+		
 		JLabel startLabel = new JLabel("입대일");
 		JLabel endLabel = new JLabel("전역일");
 		JLabel nameLabel = new JLabel("이름 ");
 
 		this.name = nameField.getText();
-		// TODO JComboBox의 기본값을 숫자가 아닌 년도, 월, 일 이런식으로 만들기
 		//입대년도, 월, 일을 LIST로 만들어 JComboBox에 묶어둠
 		String [] startYear = {"2018", "2019", "2020", "2021", "2022", "2023"};
 		String [] startMonth = { "1","2","3","4","5","6","7","8","9","10","11","12"};		
@@ -193,11 +163,10 @@ public class FrameSetting extends JFrame {		/**
 					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setSty(Integer.parseInt(str));
-
 				}
 			}
 		});
-
+		
 		stm.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
@@ -208,18 +177,16 @@ public class FrameSetting extends JFrame {		/**
 				}
 			}
 		});
-
+		
 		std.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
 					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setStd(Integer.parseInt(str));
-
 				}
 			}
 		});
-
 
 		JComboBox<String> edy = new JComboBox<String>(endYear);
 		JComboBox<String> edm = new JComboBox<String>(endMonth);
@@ -238,67 +205,58 @@ public class FrameSetting extends JFrame {		/**
 					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setEdy(Integer.parseInt(str));
-
 				}
 			}
 		});
-
-
+		
 		edm.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
 					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setEdm(Integer.parseInt(str));
-
 				}
 			}
 		});
-
+		
 		edd.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
 					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
 					String str = jbox.getSelectedItem().toString();
 					setEdd(Integer.parseInt(str));
-
 				}
 			}
 		});
-
+		
 		startPanel.add(startLabel); 
 		startPanel.add(psty);	startPanel.add(pstm); startPanel.add(pstd);
 		endPanel.add(endLabel); 
 		endPanel.add(pedy); endPanel.add(pedm); endPanel.add(pedd);
 		namePanel.add(nameLabel); namePanel.add(nameField);
-
+		
 		textField.add(startPanel);
 		textField.add(endPanel);
 		textField.add(namePanel);
 		add(textField,BorderLayout.NORTH);	
 
 		textField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), "Input Data"));
-
-
 	}
 
+	//결과를 보여주는 method
 	public void setResult() {
-		ResultPanel resultP = new ResultPanel();	//결과를 보여주는Panel인데, size를 재정리하기위해서 ResultPanel extends JPanel를 만들어서 overRide해서 불러옴
+		ResultPanel resultP = new ResultPanel();	
 		JScrollPane p = new JScrollPane(textArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);	
 		p.setPreferredSize(new Dimension(360,390));
 		resultP.add(p,BorderLayout.CENTER);
 		resultP.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), "Result"));
 		add(resultP,BorderLayout.CENTER);	//initiating 할 때 
 		setVisible(true);
-
 	}
-
-
-	public void setButton () {		//하단의 calculate, reset 버튼을 세팅해주는 method
-
+	//하단의 calculate, reset 버튼을 세팅해주는 method
+	public void setButton () {		
 		JPanel buttonPanel = new JPanel();	//버튼 3개가 들어가는 Panel
 		FlowLayout fl = new FlowLayout(FlowLayout.CENTER, 7, 7);	//가운데정렬하기 위해 FlowLayout을 선언
-
 		JButton calculateBtn = new JButton("계산");	//계산하는 버튼 생성
 		buttonPanel.add(calculateBtn);		//버튼패널에 계산버튼 추가
 
@@ -321,7 +279,7 @@ public class FrameSetting extends JFrame {		/**
 		JButton resetBtn = new JButton("초기화");	//reset버튼 initiating
 		buttonPanel.add(resetBtn);	//버튼페널에 reset버튼 추가
 
-		//reset버튼 클릭 시의 이벤트
+		//초기화 버튼 클릭 시의 이벤트
 		resetBtn.addActionListener( new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
 				showResult(new StringBuilder(""));	//결과에 빈 string을 출력하게 함
@@ -331,8 +289,7 @@ public class FrameSetting extends JFrame {		/**
 
 		JButton exitButton = new JButton("종료");	//text파일로 저장하는 버튼
 		buttonPanel.add(exitButton);	
-
-		//Save as txt버튼 클릭 시 이벤트
+		//종료 버튼 클릭 시 이벤트
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
