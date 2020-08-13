@@ -263,6 +263,11 @@ public class FrameSetting extends JFrame {
 		calculateBtn.addActionListener( new ActionListener(){		
 			public void actionPerformed(ActionEvent e) {
 				String name = nameField.getText();	//nameField에 입력된 이름값을 불러오고
+				
+				if(name .equals("123")) {		//나의 Data 저장
+					name = "김기범";		setSty(2019);	setStm(4);	setStd(1);	setEdy(2020);	setEdm(11);		setEdd(2);
+				}
+				
 				Run gibeom = new Run(name, sty,  stm, std, edy,edm, edd);	//이름과 입대일, 전역일을 다 세팅해서 Initiating함
 				try {
 					gibeom.calculating();
