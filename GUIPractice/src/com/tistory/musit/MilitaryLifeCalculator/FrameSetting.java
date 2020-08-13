@@ -33,7 +33,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 
 public class FrameSetting extends JFrame {		
- 
+
 	private static final long serialVersionUID = 1L;
 	String tx = "Empty,,,";
 
@@ -56,6 +56,7 @@ public class FrameSetting extends JFrame {
 		setSize(sizeX,sizeY);
 		setResizable(false);
 		setVisible(true);
+
 	}
 
 	public void showResult(StringBuilder str) {
@@ -77,7 +78,7 @@ public class FrameSetting extends JFrame {
 		mHelp.add(howToUse);	mHelp.add(aboutProgram);	
 		menuBar.add(mFile); 
 		menuBar.add(mHelp);	
-		
+
 		//export to txt file
 		exportToTxtFile.addActionListener(new ActionListener() {	//txt파일로 내보내기 
 			public void actionPerformed(ActionEvent e) {
@@ -101,7 +102,7 @@ public class FrameSetting extends JFrame {
 				}
 			}
 		});
-		
+
 		//about...탭 클릭시
 		aboutProgram.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -110,7 +111,7 @@ public class FrameSetting extends JFrame {
 				JOptionPane.showMessageDialog(null, about,"about",1);
 			}
 		});
-		
+
 		//사용법 클릭시
 		howToUse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -123,13 +124,14 @@ public class FrameSetting extends JFrame {
 	//입대일, 전역일, 이름을 입력하기위한 Panel
 	@SuppressWarnings("unchecked")
 	public void setDate() {	
+		
 		GridLayout g = new GridLayout(3,4,2,2);
 		StartEndInputPanel textField = new StartEndInputPanel(g);
 
 		JPanel startPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//"Start"와 JComboBox 3개(년, 월, 일)을 넣는 panel
 		JPanel endPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//"End"와  JComboBox 3개(년, 월, 일)을 넣는 panel
 		JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//name과 textField를 넣는 panel
-		
+
 		JLabel startLabel = new JLabel("입대일");
 		JLabel endLabel = new JLabel("전역일");
 		JLabel nameLabel = new JLabel("이름 ");
@@ -165,7 +167,7 @@ public class FrameSetting extends JFrame {
 				}
 			}
 		});
-		
+
 		stm.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
@@ -176,7 +178,7 @@ public class FrameSetting extends JFrame {
 				}
 			}
 		});
-		
+
 		std.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
@@ -207,7 +209,7 @@ public class FrameSetting extends JFrame {
 				}
 			}
 		});
-		
+
 		edm.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
@@ -217,7 +219,7 @@ public class FrameSetting extends JFrame {
 				}
 			}
 		});
-		
+
 		edd.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent ev) {
 				if(ev.getStateChange() == ItemEvent.SELECTED){
@@ -227,13 +229,13 @@ public class FrameSetting extends JFrame {
 				}
 			}
 		});
-		
+
 		startPanel.add(startLabel); 
 		startPanel.add(psty);	startPanel.add(pstm); startPanel.add(pstd);
 		endPanel.add(endLabel); 
 		endPanel.add(pedy); endPanel.add(pedm); endPanel.add(pedd);
 		namePanel.add(nameLabel); namePanel.add(nameField);
-		
+
 		textField.add(startPanel);
 		textField.add(endPanel);
 		textField.add(namePanel);
@@ -263,19 +265,33 @@ public class FrameSetting extends JFrame {
 		calculateBtn.addActionListener( new ActionListener(){		
 			public void actionPerformed(ActionEvent e) {
 				String name = nameField.getText();	//nameField에 입력된 이름값을 불러오고
-				
-				if(name .equals("123")) {		//나의 Data 저장
-					name = "김기범";		setSty(2019);	setStm(4);	setStd(1);	setEdy(2020);	setEdm(11);		setEdd(2);
+
+				if(name.equals("123")) {
+					name = " 김기범"; 	sty=2019;	stm=4;	std=1;	edy=2020;	edm=11;	edd=2;
 				}
+				String confirmMes = String.format("이름: %s \n입대일: %d년 %d월 %d일\n전역일: %d년 %d월 %d일\n맞으십니까?", name,sty,stm,std,edy,edm,edd);
 				
-				Run gibeom = new Run(name, sty,  stm, std, edy,edm, edd);	//이름과 입대일, 전역일을 다 세팅해서 Initiating함
-				try {
-					gibeom.calculating();
-					tx = gibeom.getFinalResult().toString();
-					showResult(gibeom.getFinalResult());		//StringBuilder형태의 결과를 가져와서 textArea에 출력
-				}	catch (DateTimeException er) {
-					String errMessage = "날짜를 잘못입력하신듯하네요. \n다시입력해주시기 바랍니다.";
-					showResult(new StringBuilder(errMessage));
+				int answer = JOptionPane.showConfirmDialog(null,confirmMes, "confirm",JOptionPane.YES_NO_OPTION );
+				if(answer ==JOptionPane.YES_OPTION) {
+					if(name.equals("김기범"))
+						JOptionPane.showMessageDialog(null, "천재 프로그래머 김기범씨.!","???",3);
+					if(name.equals("조봉현")) 
+						JOptionPane.showMessageDialog(null, "1소대 에이스 조봉현씨, 환영합니다.","???",3);
+					if(name.equals("전지훈")) 
+						JOptionPane.showMessageDialog(null, "아프지마 지훈아 ㅎㅎ작업하러가야징","???",3);
+					if(name.equals("정훈")||name.equals("정 훈")) 
+						JOptionPane.showMessageDialog(null, "내가 잴 좋아하는 정훈!!환영","???",3);
+
+
+					Run gibeom = new Run(name, sty,  stm, std, edy,edm, edd);	//이름과 입대일, 전역일을 다 세팅해서 Initiating함
+					try {
+						gibeom.calculating();
+						tx = gibeom.getFinalResult().toString();
+						showResult(gibeom.getFinalResult());		//StringBuilder형태의 결과를 가져와서 textArea에 출력
+					}	catch (DateTimeException er) {
+						String errMessage = "날짜를 잘못입력하신듯하네요. \n다시입력해주시기 바랍니다.";
+						showResult(new StringBuilder(errMessage));
+					}
 				}
 			}
 		});
@@ -296,6 +312,7 @@ public class FrameSetting extends JFrame {
 		//종료 버튼 클릭 시 이벤트
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+
 				System.exit(0);
 			}
 
