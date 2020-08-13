@@ -15,7 +15,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
-import java.util.HashMap;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -44,9 +44,6 @@ public class FrameSetting extends JFrame {
 	int sty, stm, std,  edy, edm, edd;	//순서대로 입대년, 입대월, 입대일, 전역년, 전역월, 전역일을 변수로 선언
 	@SuppressWarnings("unused")
 	private String name;	//textField에 입력된 이름값을 저장하기위해  선언
-
-
-	HashMap<String, String> userInfo = new HashMap<>();
 
 	public FrameSetting(String title, int x, int y, int sizeX, int sizeY) {	//constructor을 생성 (frame이름, xy좌표, 크기)
 		super(title);
@@ -86,7 +83,7 @@ public class FrameSetting extends JFrame {
 				{
 					SimpleDateFormat format1 = new SimpleDateFormat ( "yy년MM월dd일 EEE요일");
 					String today= format1.format (System.currentTimeMillis());
-					String fileName = String.format("%s님의 군생활(%s).txt",nameField.getText(),today);	//파일이름
+					String fileName = String.format("%s님의 군생활(%s).txt",name,today);	//파일이름
 					FileWriter fw = new FileWriter(fileName,false); 
 					BufferedWriter bw = new BufferedWriter(fw);
 					String str = tx;
@@ -264,10 +261,10 @@ public class FrameSetting extends JFrame {
 		//계산 버튼 클릭 시의 이벤트
 		calculateBtn.addActionListener( new ActionListener(){		
 			public void actionPerformed(ActionEvent e) {
-				String name = nameField.getText();	//nameField에 입력된 이름값을 불러오고
-
+				setName(nameField.getText());	//nameField에 입력된 이름값을 불러오고
+				
 				if(name.equals("123")) {
-					name = " 김기범"; 	sty=2019;	stm=4;	std=1;	edy=2020;	edm=11;	edd=2;
+					name = " 김기범"; 	sty=2019;	stm=4;	std=1;	edy=2020;	edm=11;	edd=2;	setName(name);
 				}
 				String confirmMes = String.format("이름: %s \n입대일: %d년 %d월 %d일\n전역일: %d년 %d월 %d일\n맞으십니까?", name,sty,stm,std,edy,edm,edd);
 				
@@ -373,5 +370,12 @@ public class FrameSetting extends JFrame {
 		this.edd = edd;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
 
 }
