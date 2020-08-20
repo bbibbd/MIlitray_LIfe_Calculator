@@ -1,6 +1,8 @@
 package com.tistory.musit.MilitaryLifeCalculator;
 
 class DataManagement{
+	
+	protected String name;
 
 	protected int startYear=2019; //입대한 년도
 	protected int startMonth=1;   //입대한 월
@@ -78,5 +80,14 @@ class DataManagement{
 
 	public double getPercentage(){
 		return percentage;
+	}
+	
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

@@ -5,22 +5,16 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
-
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -32,20 +26,19 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 
-public class FrameSetting extends JFrame {		
+public class MainFrame extends JFrame {		
 
 	private static final long serialVersionUID = 1L;
 	String tx = "Empty,,,";
-
-	JTextField nameField = new JTextField("",14);	//이름 입력을 위한 TextField를 선언
 	JTextArea textArea = new JTextArea(5,20);	//	resultP안에 들어가는 TextArea를 선언해 실제 결과를 출력할 수 있게 함.
-	//최종 출력을 Txt파일로 저장하기위해 선언, reset버튼과 calculate버튼을 눌렀을 때 사용해야하기때문에
 
+	
 	int sty, stm, std,  edy, edm, edd;	//순서대로 입대년, 입대월, 입대일, 전역년, 전역월, 전역일을 변수로 선언
-	@SuppressWarnings("unused")
-	private String name;	//textField에 입력된 이름값을 저장하기위해  선언
-
-	public FrameSetting(String title, int x, int y, int sizeX, int sizeY) {	//constructor을 생성 (frame이름, xy좌표, 크기)
+	String name;
+	
+	DataSettingFrame ds = new DataSettingFrame();
+	
+	public MainFrame(String title, int x, int y, int sizeX, int sizeY) {	//constructor을 생성 (frame이름, xy좌표, 크기)
 		super(title);
 		JOptionPane.showMessageDialog(null, "당신의 군생활이 궁금하신가요?","???",3);
 		JOptionPane.showMessageDialog(null, "잘 오셨습니다. 당신의 군생활을 응원합니다!!!","???",2);
@@ -53,7 +46,13 @@ public class FrameSetting extends JFrame {
 		setSize(sizeX,sizeY);
 		setResizable(false);
 		setVisible(true);
-
+		textArea.setEditable(false);
+	}
+	
+	public void setDate() {
+		sty = ds.getSty();	stm = ds.getStm(); std = ds.getStd();
+		edy = ds.getEdy(); edm = ds.getEdm();	edd = ds.getEdd();
+		name = ds.getNameField().getText();
 	}
 
 	public void showResult(StringBuilder str) {
@@ -119,126 +118,10 @@ public class FrameSetting extends JFrame {
 	}
 
 	//입대일, 전역일, 이름을 입력하기위한 Panel
-	@SuppressWarnings("unchecked")
-	public void setDate() {	
-		
-		GridLayout g = new GridLayout(3,4,2,2);
-		StartEndInputPanel textField = new StartEndInputPanel(g);
-
-		JPanel startPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//"Start"와 JComboBox 3개(년, 월, 일)을 넣는 panel
-		JPanel endPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//"End"와  JComboBox 3개(년, 월, 일)을 넣는 panel
-		JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//name과 textField를 넣는 panel
-
-		JLabel startLabel = new JLabel("입대일");
-		JLabel endLabel = new JLabel("전역일");
-		JLabel nameLabel = new JLabel("이름 ");
-
-		this.name = nameField.getText();
-		//입대년도, 월, 일을 LIST로 만들어 JComboBox에 묶어둠
-		String [] startYear = {"2019", "2020", "2021", "2022", "2023"};
-		String [] startMonth = { "1","2","3","4","5","6","7","8","9","10","11","12"};		
-		String  [] startDay = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-		//전역년도, 월, 일을 LIST로 만들어 JComboBox에 묶어둠
-		String [] endYear =  { "2020", "2021", "2022", "2023","2024","2025"};
-		String [] endMonth = {"1","2","3","4","5","6","7","8","9","10","11","12"};		
-		String  [] endDay = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-
-		JComboBox <String> sty = new JComboBox<String>(startYear);
-		JComboBox <String> stm = new JComboBox<String>(startMonth);
-		JComboBox <String> std = new JComboBox<String>(startDay);
-		JScrollPane psty = new JScrollPane(sty);
-		JScrollPane pstm = new JScrollPane(stm);
-		JScrollPane pstd = new JScrollPane(std);
-
-		this.sty = Integer.parseInt(sty.getSelectedItem().toString());	//Integer로 저장하기 위해 변환과정을 거침.
-		this.stm = Integer.parseInt(stm.getSelectedItem().toString());
-		this.std =  Integer.parseInt(std.getSelectedItem().toString());
-
-		//각각 combobox에 입력된 값을 sty, sym, syd, edy, edm, edd에 저장함
-		sty.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent ev) {
-				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
-					String str = jbox.getSelectedItem().toString();
-					setSty(Integer.parseInt(str));
-				}
-			}
-		});
-
-		stm.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent ev) {
-				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
-					String str = jbox.getSelectedItem().toString();
-					setStm(Integer.parseInt(str));
-
-				}
-			}
-		});
-
-		std.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent ev) {
-				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
-					String str = jbox.getSelectedItem().toString();
-					setStd(Integer.parseInt(str));
-				}
-			}
-		});
-
-		JComboBox<String> edy = new JComboBox<String>(endYear);
-		JComboBox<String> edm = new JComboBox<String>(endMonth);
-		JComboBox<String> edd = new JComboBox<String>(endDay);
-		JScrollPane pedy = new JScrollPane(edy);
-		JScrollPane pedm = new JScrollPane(edm);
-		JScrollPane pedd = new JScrollPane(edd);
-
-		this.edy = Integer.parseInt(edy.getSelectedItem().toString());
-		this.edm = Integer.parseInt(edm.getSelectedItem().toString());
-		this.edd =  Integer.parseInt(edd.getSelectedItem().toString());
-
-		edy.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent ev) {
-				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
-					String str = jbox.getSelectedItem().toString();
-					setEdy(Integer.parseInt(str));
-				}
-			}
-		});
-
-		edm.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent ev) {
-				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
-					String str = jbox.getSelectedItem().toString();
-					setEdm(Integer.parseInt(str));
-				}
-			}
-		});
-
-		edd.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent ev) {
-				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
-					String str = jbox.getSelectedItem().toString();
-					setEdd(Integer.parseInt(str));
-				}
-			}
-		});
-
-		startPanel.add(startLabel); 
-		startPanel.add(psty);	startPanel.add(pstm); startPanel.add(pstd);
-		endPanel.add(endLabel); 
-		endPanel.add(pedy); endPanel.add(pedm); endPanel.add(pedd);
-		namePanel.add(nameLabel); namePanel.add(nameField);
-
-		textField.add(startPanel);
-		textField.add(endPanel);
-		textField.add(namePanel);
-		add(textField,BorderLayout.NORTH);	
-
-		textField.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), "Input Data"));
+	public void setData() {	
+		ds.setData();
+		add(ds.getDataInputPanel(),BorderLayout.NORTH);	
+		ds.getDataInputPanel().setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), "Input Data"));
 	}
 
 	//결과를 보여주는 method
@@ -261,7 +144,9 @@ public class FrameSetting extends JFrame {
 		//계산 버튼 클릭 시의 이벤트
 		calculateBtn.addActionListener( new ActionListener(){		
 			public void actionPerformed(ActionEvent e) {
-				setName(nameField.getText());	//nameField에 입력된 이름값을 불러오고
+				
+				
+				System.out.printf("%s/ %d %d %d\n", name, sty, stm, std);
 				
 				if(name.equals("123")) {
 					name = " 김기범"; 	sty=2019;	stm=4;	std=1;	edy=2020;	edm=11;	edd=2;	setName(name);
@@ -279,7 +164,6 @@ public class FrameSetting extends JFrame {
 					if(name.equals("정훈")||name.equals("정 훈")) 
 						JOptionPane.showMessageDialog(null, "내가 잴 좋아하는 정훈!!환영","???",3);
 
-
 					Run gibeom = new Run(name, sty,  stm, std, edy,edm, edd);	//이름과 입대일, 전역일을 다 세팅해서 Initiating함
 					try {
 						gibeom.calculating();
@@ -290,6 +174,7 @@ public class FrameSetting extends JFrame {
 						showResult(new StringBuilder(errMessage));
 					}
 				}
+				
 			}
 		});
 
@@ -304,13 +189,13 @@ public class FrameSetting extends JFrame {
 			}
 		});
 
-		JButton exitButton = new JButton("종료");	//text파일로 저장하는 버튼
+		JButton exitButton = new JButton("짬차이 계산기");	//text파일로 저장하는 버튼
 		buttonPanel.add(exitButton);	
 		//종료 버튼 클릭 시 이벤트
 		exitButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 
-				System.exit(0);
+
 			}
 
 		});

@@ -6,10 +6,10 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		FrameSetting frame = new FrameSetting("너의 군생활은. ", 760, 214, 400,675);
+		MainFrame frame = new MainFrame("너의 군생활은. ", 760, 214, 400,675);
 		frame.setMenuBar();
 		frame.setButton();
-		frame.setDate();
+		frame.setData();
 		frame.setResult();
 	}
 
