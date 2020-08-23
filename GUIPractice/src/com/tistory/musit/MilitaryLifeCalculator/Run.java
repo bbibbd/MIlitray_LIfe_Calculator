@@ -6,7 +6,16 @@ class Run {
 	private String name;
 	PeriodCalculator calculator = new PeriodCalculator();
 	private int betweenY = calculator.getBetweenYear();
+	private int remainDays;
 	
+	public int getRemainDays() {
+		return remainDays;
+	}
+
+	public void setRemainDays(int remainDays) {
+		this.remainDays = remainDays;
+	}
+
 	public int getBetweenYaer() {
 		return betweenY;
 	}
@@ -83,6 +92,7 @@ class Run {
 
 
 	StringBuilder  finalResult = new StringBuilder("");	//각 method의 결과를 String으로 저장하기위해 StringBuilder을 사용함
+	private double percentage;
 
 	public void calculating(){
 
@@ -94,7 +104,8 @@ class Run {
 		calculator.setEndDate(ed);
 		calculator.calculatingPeriode();
 		
-
+		this.remainDays = calculator.getRemainDays();
+		this.percentage = (double)calculator.getPercentage();
 		
 		//군생활이 1년도 안되는 경우(즉, 잘못 입력한 경우)
 		if(calculator.getBetweenYear()==0) {
@@ -191,10 +202,9 @@ class Run {
 		
 	}
 
-	private double remainPercentage = calculator.getPercentage();  //남은percentage를 
 
 	public double getPercentage(){
-		return remainPercentage;
+		return percentage;
 	}
 
 	public StringBuilder getFinalResult() {
