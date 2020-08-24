@@ -99,9 +99,9 @@ class Run {
 		calculator.setStartYear(sy);
 		calculator.setStartMonth(sm);
 		calculator.setStartDate(sd);
-		calculator.setEndYear(ey);
-		calculator.setEndMonth(em);
-		calculator.setEndDate(ed);
+		//calculator.setEndYear(ey);
+		//calculator.setEndMonth(em);
+		//calculator.setEndDate(ed);
 		calculator.calculatingPeriode();
 		
 		this.remainDays = calculator.getRemainDays();

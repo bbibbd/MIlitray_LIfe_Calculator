@@ -30,11 +30,9 @@ public class DataSettingFrame extends JFrame {
 	public void setData(){
 
 		JPanel startPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//"Start"와 JComboBox 3개(년, 월, 일)을 넣는 panel
-		JPanel endPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//"End"와  JComboBox 3개(년, 월, 일)을 넣는 panel
 		JPanel namePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));	//name과 textField를 넣는 panel
 
 		JLabel startLabel = new JLabel("입대일");
-		JLabel endLabel = new JLabel("전역일");
 		JLabel nameLabel = new JLabel("이름 ");
 
 
@@ -134,12 +132,10 @@ public class DataSettingFrame extends JFrame {
 
 		startPanel.add(startLabel); 
 		startPanel.add(psty);	startPanel.add(pstm); startPanel.add(pstd);
-		endPanel.add(endLabel); 
-		endPanel.add(pedy); endPanel.add(pedm); endPanel.add(pedd);
+
 		namePanel.add(nameLabel); namePanel.add(nameField);
 
 		dataInputPanel.add(startPanel);
-		dataInputPanel.add(endPanel);
 		dataInputPanel.add(namePanel);
 		add(dataInputPanel,BorderLayout.NORTH);	
 

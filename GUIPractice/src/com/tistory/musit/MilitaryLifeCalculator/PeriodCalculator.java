@@ -3,6 +3,7 @@ package com.tistory.musit.MilitaryLifeCalculator;
 import java.time.Period;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 
 class PeriodCalculator extends DataManagement {
 
@@ -10,9 +11,20 @@ class PeriodCalculator extends DataManagement {
 	public void calculatingPeriode() {
 		LocalDate today = LocalDate.now();
 		LocalDate start = LocalDate.of(startYear, startMonth, startDate);
+		LocalDate decreaseStart = LocalDate.of(2017, 1, 3);
+		
+		int dayDifference = (int) ChronoUnit.DAYS.between(decreaseStart, start);
+		minusDays = (dayDifference/14)+1;
+		
+		DayCalculator dc = new DayCalculator();
+		int endYear = dc.subDays(startYear, startMonth, startDate, minusDays).get(Calendar.YEAR);
+		int endMonth = dc.subDays(startYear, startMonth, startDate, minusDays).get(Calendar.MONTH);
+		int endDate = dc.subDays(startYear, startMonth, startDate, minusDays).get(Calendar.DATE);
+		
 		LocalDate end = LocalDate.of(endYear, endMonth, endDate);
-		Period between = Period.between(start, end);
 
+		Period between = Period.between(start, end);
+		
 		betweenYear = between.getYears();
 		betweenMonth = between.getMonths();
 		betweenDays = between.getDays();
@@ -22,6 +34,7 @@ class PeriodCalculator extends DataManagement {
 		remainWeeks = (int) ChronoUnit.WEEKS.between(today, end);
 		pastDays = (int) ChronoUnit.DAYS.between(start, today) + 1;
 		percentage = pastDays * 100.0 / totalDays;
+	
 	}
 
 	// ¸ÔÀº Â« ¼ö

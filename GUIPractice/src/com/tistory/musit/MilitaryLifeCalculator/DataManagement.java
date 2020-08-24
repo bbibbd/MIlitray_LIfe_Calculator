@@ -15,6 +15,15 @@ class DataManagement{
 	protected int betweenYear;  //전체 군생활 O년
 	protected int betweenMonth; //전체 군생활 O월
 	protected int betweenDays;  //전체 군생활 O일
+	protected int minusDays;
+
+	public int getMinusDays() {
+		return minusDays;
+	}
+
+	public void setMinusDays(int minusDays) {
+		this.minusDays = minusDays;
+	}
 
 	protected int totalDays;    //전체 군생활하는 일수
 	protected int remainDays;   //남은 일수
