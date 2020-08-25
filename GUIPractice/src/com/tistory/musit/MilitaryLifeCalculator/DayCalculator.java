@@ -13,6 +13,8 @@ public class DayCalculator{
 	}
 	
 	public Calendar subDays(int sty, int stm, int std, int mid) {
+		if(mid<=0)	mid =0;
+		if(mid>=91)	mid = 91;
 		Calendar cl = Calendar.getInstance();
 		cl.set(sty,stm,std);
 		cl.add(Calendar.DATE, 640-mid);

@@ -1,3 +1,4 @@
+
 package com.tistory.musit.MilitaryLifeCalculator;
 
 import java.text.DecimalFormat;
@@ -99,14 +100,16 @@ class Run {
 		calculator.setStartYear(sy);
 		calculator.setStartMonth(sm);
 		calculator.setStartDate(sd);
-		//calculator.setEndYear(ey);
-		//calculator.setEndMonth(em);
-		//calculator.setEndDate(ed);
+		calculator.setEndYear(ey);
+		calculator.setEndMonth(em);
+		calculator.setEndDate(ed);
 		calculator.calculatingPeriode();
 		
 		this.remainDays = calculator.getRemainDays();
 		this.percentage = (double)calculator.getPercentage();
 		
+		//입대일, 전역일
+		finalResult.append(String.format("이름: %s\n입대일: %d년 %d월 %d일\n전역일: %d년 %d월 %d일\n",name, sy, sm, sd, ey, em, ed));
 		//군생활이 1년도 안되는 경우(즉, 잘못 입력한 경우)
 		if(calculator.getBetweenYear()==0) {
 			finalResult.append(String.format("%s님..잘못입력하신거 같습니다.\n다시 입력해 주시길.....\n\n", name));
@@ -210,7 +213,6 @@ class Run {
 	public StringBuilder getFinalResult() {
 		return finalResult;
 	}
-
 
 
 }

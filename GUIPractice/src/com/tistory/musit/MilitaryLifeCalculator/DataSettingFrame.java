@@ -25,7 +25,7 @@ public class DataSettingFrame extends JFrame {
 	JTextField nameField = new JTextField("",14);
 
 	GridLayout g = new GridLayout(3,4,2,2);
-	StartEndInputPanel dataInputPanel = new StartEndInputPanel(g);
+	StartEndInputPanel dataInputPanel = new StartEndInputPanel();
 	
 	public void setData(){
 
@@ -41,10 +41,6 @@ public class DataSettingFrame extends JFrame {
 		String [] startYear = {"2019", "2020", "2021", "2022", "2023"};
 		String [] startMonth = { "1","2","3","4","5","6","7","8","9","10","11","12"};		
 		String  [] startDay = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
-		//전역년도, 월, 일을 LIST로 만들어 JComboBox에 묶어둠
-		String [] endYear =  { "2020", "2021", "2022", "2023","2024","2025"};
-		String [] endMonth = {"1","2","3","4","5","6","7","8","9","10","11","12"};		
-		String  [] endDay = {"1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31"};
 
 		JComboBox <String> sty = new JComboBox<String>(startYear);
 		JComboBox <String> stm = new JComboBox<String>(startMonth);
@@ -89,54 +85,14 @@ public class DataSettingFrame extends JFrame {
 			}
 		});
 
-		JComboBox<String> edy = new JComboBox<String>(endYear);
-		JComboBox<String> edm = new JComboBox<String>(endMonth);
-		JComboBox<String> edd = new JComboBox<String>(endDay);
-		JScrollPane pedy = new JScrollPane(edy);
-		JScrollPane pedm = new JScrollPane(edm);
-		JScrollPane pedd = new JScrollPane(edd);
-
-		this.edy = Integer.parseInt(edy.getSelectedItem().toString());
-		this.edm = Integer.parseInt(edm.getSelectedItem().toString());
-		this.edd =  Integer.parseInt(edd.getSelectedItem().toString());
-
-		edy.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent ev) {
-				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
-					String str = jbox.getSelectedItem().toString();
-					setEdy(Integer.parseInt(str));
-				}
-			}
-		});
-
-		edm.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent ev) {
-				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
-					String str = jbox.getSelectedItem().toString();
-					setEdm(Integer.parseInt(str));
-				}
-			}
-		});
-
-		edd.addItemListener(new ItemListener() {
-			public void itemStateChanged(ItemEvent ev) {
-				if(ev.getStateChange() == ItemEvent.SELECTED){
-					JComboBox<String> jbox = (JComboBox<String>)ev.getItemSelectable();
-					String str = jbox.getSelectedItem().toString();
-					setEdd(Integer.parseInt(str));
-				}
-			}
-		});
 
 		startPanel.add(startLabel); 
 		startPanel.add(psty);	startPanel.add(pstm); startPanel.add(pstd);
 
 		namePanel.add(nameLabel); namePanel.add(nameField);
 
-		dataInputPanel.add(startPanel);
-		dataInputPanel.add(namePanel);
+		dataInputPanel.add(startPanel,BorderLayout.NORTH);
+		dataInputPanel.add(namePanel,BorderLayout.CENTER);
 		add(dataInputPanel,BorderLayout.NORTH);	
 
 		dataInputPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.BLUE), titleBorder));

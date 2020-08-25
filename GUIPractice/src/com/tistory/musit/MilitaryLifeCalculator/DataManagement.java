@@ -8,6 +8,62 @@ class DataManagement{
 	protected int startMonth=1;   //입대한 월
 	protected int startDate=21;   //입대한 일
 
+	public int getBetweenDays() {
+		return betweenDays;
+	}
+
+	public void setBetweenDays(int betweenDays) {
+		this.betweenDays = betweenDays;
+	}
+
+	public int getStartYear() {
+		return startYear;
+	}
+
+	public int getStartMonth() {
+		return startMonth;
+	}
+
+	public int getStartDate() {
+		return startDate;
+	}
+
+	public int getEndYear() {
+		return endYear;
+	}
+
+	public int getEndMonth() {
+		return endMonth;
+	}
+
+	public int getEndDate() {
+		return endDate;
+	}
+
+	public void setBetweenYear(int betweenYear) {
+		this.betweenYear = betweenYear;
+	}
+
+	public void setBetweenMonth(int betweenMonth) {
+		this.betweenMonth = betweenMonth;
+	}
+
+	public void setTotalDays(int totalDays) {
+		this.totalDays = totalDays;
+	}
+
+	public void setRemainDays(int remainDays) {
+		this.remainDays = remainDays;
+	}
+
+	public void setPastDays(int pastDays) {
+		this.pastDays = pastDays;
+	}
+
+	public void setPercentage(double percentage) {
+		this.percentage = percentage;
+	}
+
 	protected int endYear=2020;   //전역하는 년도
 	protected int endMonth=11;    //전역하는 월
 	protected int endDate=20;     //전역하는 일

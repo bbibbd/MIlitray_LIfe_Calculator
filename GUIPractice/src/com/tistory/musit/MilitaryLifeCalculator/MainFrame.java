@@ -12,6 +12,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
+
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -83,13 +87,16 @@ public class MainFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				startYear = ds.getSty();	startMonth = ds.getStm(); startDate = ds.getStd();
-				endYear = ds.getEdy(); endMonth = ds.getEdm();	endDate = ds.getEdd();
 				userName = ds.getNameField().getText();
 				
+				EndCalculator ec = new EndCalculator(startYear, startMonth, startDate);
+				endYear = ec.getEndYear();	endMonth = ec.getEndMonth();	endDate = ec.getEndDate();
+				
 				if(userName.equals("123")) {
-					userName = " 김기범"; 	startYear=2019;	startMonth=4;	startDate=1;	endYear=2020;	endMonth=11;	endDate=2;	setName(userName);
+					userName = " 김기범"; 	startYear=2019;	startMonth=4;	startDate=1;	setName(userName);
 				}
 				
+						
 				String confirmMes = String.format("이름: %s \n입대일: %d년 %d월 %d일\n전역일: %d년 %d월 %d일\n맞으십니까?", userName,startYear,startMonth,startDate,endYear,endMonth,endDate);
 				
 				int answer = JOptionPane.showConfirmDialog(null,confirmMes, "confirm",JOptionPane.YES_NO_OPTION );
@@ -104,7 +111,7 @@ public class MainFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "내가 잴 좋아하는 정훈!!환영","???",3);
 					
 					mf.setName(userName);
-					Run gibeom = new Run(userName, startYear,  startMonth, startDate, endYear,endMonth, endDate);	//이름과 입대일, 전역일을 다 세팅해서 Initiating함
+					Run gibeom = new Run(userName, startYear,  startMonth, startDate, endYear, endMonth, endDate);	//이름과 입대일, 전역일을 다 세팅해서 Initiating함
 					try {
 						gibeom.calculating();
 						mf.setTx(gibeom.getFinalResult().toString());

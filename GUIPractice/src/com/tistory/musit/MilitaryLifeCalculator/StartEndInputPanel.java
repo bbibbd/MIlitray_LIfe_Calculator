@@ -9,13 +9,9 @@ import javax.swing.JPanel;
 
 public class StartEndInputPanel extends JPanel {
 	
-	
-	public StartEndInputPanel(LayoutManager g) {
-		setLayout(g);
-	}
 
 	public Dimension getPreferredSize() {
-		return new Dimension(280, 130);
+		return new Dimension(280, 108);
 	}
 	
 	
