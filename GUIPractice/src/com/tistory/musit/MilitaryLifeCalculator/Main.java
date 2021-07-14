@@ -6,14 +6,14 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		MainFrame frame = new MainFrame("³ÊÀÇ ±º»ýÈ°Àº. ", 760, 214, 400,675);
+		MainFrame frame = new MainFrame("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½È°ï¿½ï¿½. ", 760, 214, 400,675);
 		frame.setMenuBar();
 		frame.setButtonPanel();
 		frame.setDataPanel();
 		frame.setResultPanel();
 		
 		DayCalculator dc = new DayCalculator();
-		int endMonth = dc.subDays(2019, 5, 25, 30).get(Calendar.MONTH);
+		int endMonth = dc.subDays(2019, 5, 25, 30).get(Calendar.MONTH); ///wow
 		
 
 
